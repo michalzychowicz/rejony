@@ -1,17 +1,40 @@
 let data;
 
 fetch("./data/rejony.json")
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        return response.json();
+    })
     .then(json => {
         data = json;
-
         loadStreetList();
 
         console.log("Dane załadowane:", data);
     })
     .catch(error => {
         console.error("Błąd podczas ładowania danych:", error);
+
+        displayResult({
+            status: "data-error"
+        });
     });
+
+
+/* =========================
+   NORMALIZACJA
+========================= */
+
+function normalizeText(value) {
+    return value
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ");
+}
 
 
 function normalizeAddressNumber(value) {
@@ -23,6 +46,7 @@ function normalizeAddressNumber(value) {
 
 
 function parseAddressNumber(value) {
+
     const normalized = normalizeAddressNumber(value);
 
     const match = normalized.match(/^(\d+)([a-z]*)$/);
@@ -39,66 +63,208 @@ function parseAddressNumber(value) {
 }
 
 
-function matchesRule(addressNumber, rule) {
+/* =========================
+   SPRAWDZANIE REGUŁ
+========================= */
 
-    // Cała ulica
-    if (rule.type === "all") {
+function matchesParity(number, parity) {
+
+    if (!parity) {
         return true;
     }
 
+    if (parity === "even") {
+        return number % 2 === 0;
+    }
 
-    // Konkretne numery
+    if (parity === "odd") {
+        return number % 2 !== 0;
+    }
+
+    return true;
+}
+
+
+function matchesException(addressNumber, exception) {
+
+    // Pojedynczy numer, np. "20", "10b"
+    if (typeof exception === "string") {
+
+        return (
+            addressNumber.full ===
+            normalizeAddressNumber(exception)
+        );
+    }
+
+
+    // Zakres wykluczeń
+    if (
+        !exception ||
+        typeof exception !== "object"
+    ) {
+        return false;
+    }
+
+
+    if (
+        !matchesParity(
+            addressNumber.number,
+            exception.parity
+        )
+    ) {
+        return false;
+    }
+
+
+    /*
+        Zakresy liczbowe dotyczą czystych numerów.
+
+        Czyli zakres 20-30 nie obejmuje automatycznie
+        20a, 20b itd.
+    */
+    if (addressNumber.suffix) {
+        return false;
+    }
+
+
+    if (
+        addressNumber.number <
+        exception.from
+    ) {
+        return false;
+    }
+
+
+    if (
+        exception.to !== null &&
+        addressNumber.number >
+        exception.to
+    ) {
+        return false;
+    }
+
+
+    return true;
+}
+
+
+function isExcluded(addressNumber, exclude = []) {
+
+    return exclude.some(
+        exception =>
+            matchesException(
+                addressNumber,
+                exception
+            )
+    );
+}
+
+
+function matchesRule(addressNumber, rule) {
+
+    /*
+        CAŁA ULICA
+    */
+
+    if (rule.type === "all") {
+
+        return !isExcluded(
+            addressNumber,
+            rule.exclude
+        );
+    }
+
+
+    /*
+        LISTA KONKRETNYCH NUMERÓW
+    */
+
     if (rule.type === "list") {
-        return rule.values
+
+        const matches = rule.values
             .map(normalizeAddressNumber)
             .includes(addressNumber.full);
-    }
 
 
-    // Cała ulica poza wyjątkami
-    if (rule.type === "allExcept") {
-
-        const excluded = (rule.exclude ?? [])
-            .map(normalizeAddressNumber);
-
-        return !excluded.includes(addressNumber.full);
-    }
-
-
-    // Zakres
-    if (rule.type === "range") {
-
-        if (addressNumber.number < rule.from) {
+        if (!matches) {
             return false;
         }
+
+
+        return !isExcluded(
+            addressNumber,
+            rule.exclude
+        );
+    }
+
+
+    /*
+        CAŁA ULICA POZA WYJĄTKAMI
+    */
+
+    if (rule.type === "allExcept") {
+
+        return !isExcluded(
+            addressNumber,
+            rule.exclude
+        );
+    }
+
+
+    /*
+        ZAKRES
+    */
+
+    if (rule.type === "range") {
+
+        /*
+            Zakres numeryczny nie obejmuje
+            automatycznie numerów z literą.
+
+            np. 20-30 nie oznacza 20a.
+        */
+
+        if (addressNumber.suffix) {
+            return false;
+        }
+
+
+        if (
+            addressNumber.number <
+            rule.from
+        ) {
+            return false;
+        }
+
 
         if (
             rule.to !== null &&
-            addressNumber.number > rule.to
+            addressNumber.number >
+            rule.to
         ) {
             return false;
         }
+
 
         if (
-            rule.parity === "even" &&
-            addressNumber.number % 2 !== 0
+            !matchesParity(
+                addressNumber.number,
+                rule.parity
+            )
         ) {
             return false;
         }
+
 
         if (
-            rule.parity === "odd" &&
-            addressNumber.number % 2 === 0
+            isExcluded(
+                addressNumber,
+                rule.exclude
+            )
         ) {
             return false;
         }
 
-        const excluded = (rule.exclude ?? [])
-            .map(normalizeAddressNumber);
-
-        if (excluded.includes(addressNumber.full)) {
-            return false;
-        }
 
         return true;
     }
@@ -108,127 +274,248 @@ function matchesRule(addressNumber, rule) {
 }
 
 
-function findRegion(streetName, houseNumber) {
+/* =========================
+   WYSZUKIWANIE REJONU
+========================= */
+
+function findRegion(
+    streetName,
+    houseNumber
+) {
 
     const street = data.streets.find(
-        street =>
-            street.street.toLowerCase() ===
-            streetName.trim().toLowerCase()
+        item =>
+            normalizeText(item.street) ===
+            normalizeText(streetName)
     );
 
+
     if (!street) {
+
         return {
             status: "street-not-found"
         };
     }
 
 
-    const parsedNumber = parseAddressNumber(houseNumber);
+    const parsedNumber =
+        parseAddressNumber(houseNumber);
+
 
     if (!parsedNumber) {
+
         return {
             status: "invalid-number"
         };
     }
 
 
-    const regions = [];
+    const matches = [];
 
-    for (const assignment of street.assignments) {
 
-        const matches = assignment.rules.some(
-            rule => matchesRule(parsedNumber, rule)
-        );
+    for (
+        const assignment
+        of street.assignments
+    ) {
 
-        if (matches) {
-            regions.push(assignment.region);
+        const matchesAssignment =
+            assignment.rules.some(
+                rule =>
+                    matchesRule(
+                        parsedNumber,
+                        rule
+                    )
+            );
+
+
+        if (matchesAssignment) {
+
+            matches.push({
+                region: assignment.region,
+                verified: assignment.verified,
+                sourceRule:
+                    assignment.sourceRule
+            });
         }
     }
 
 
-    if (regions.length === 0) {
+    /*
+        NIC NIE PASUJE
+    */
+
+    if (matches.length === 0) {
+
         return {
             status: "not-found"
         };
     }
 
 
-    if (regions.length === 1) {
+    /*
+        JEDEN REJON
+    */
+
+    if (matches.length === 1) {
+
         return {
             status: "found",
-            region: regions[0]
+            ...matches[0]
         };
     }
 
 
+    /*
+        KILKA REJONÓW
+    */
+
     return {
         status: "conflict",
-        regions: regions
+        matches: matches
     };
 }
 
-const searchForm = document.getElementById("searchForm");
-const streetInput = document.getElementById("street");
-const houseNumberInput = document.getElementById("houseNumber");
-const resultElement = document.getElementById("result");
-const streetList = document.getElementById("streetList");
 
+/* =========================
+   ELEMENTY STRONY
+========================= */
+
+const searchForm =
+    document.getElementById(
+        "searchForm"
+    );
+
+const streetInput =
+    document.getElementById(
+        "street"
+    );
+
+const houseNumberInput =
+    document.getElementById(
+        "houseNumber"
+    );
+
+const resultElement =
+    document.getElementById(
+        "result"
+    );
+
+const streetList =
+    document.getElementById(
+        "streetList"
+    );
+
+
+/* =========================
+   LISTA ULIC
+========================= */
 
 function loadStreetList() {
 
     streetList.innerHTML = "";
 
+
     const streets = data.streets
-        .map(street => street.street)
-        .sort((a, b) => a.localeCompare(b, "pl"));
+        .map(item => item.street)
+        .sort(
+            (a, b) =>
+                a.localeCompare(
+                    b,
+                    "pl"
+                )
+        );
 
 
     for (const street of streets) {
 
-        const option = document.createElement("option");
+        const option =
+            document.createElement(
+                "option"
+            );
+
 
         option.value = street;
 
-        streetList.appendChild(option);
+
+        streetList.appendChild(
+            option
+        );
     }
 }
 
 
-searchForm.addEventListener("submit", event => {
+/* =========================
+   FORMULARZ
+========================= */
 
-    event.preventDefault();
+searchForm.addEventListener(
+    "submit",
+    event => {
 
-
-    const street = streetInput.value;
-    const houseNumber = houseNumberInput.value;
-
-
-    const result = findRegion(
-        street,
-        houseNumber
-    );
+        event.preventDefault();
 
 
-    displayResult(result);
-});
+        if (!data) {
 
+            displayResult({
+                status: "data-error"
+            });
+
+            return;
+        }
+
+
+        const result =
+            findRegion(
+                streetInput.value,
+                houseNumberInput.value
+            );
+
+
+        displayResult(result);
+    }
+);
+
+
+/* =========================
+   WYŚWIETLANIE WYNIKU
+========================= */
 
 function displayResult(result) {
 
-    resultElement.className = "result";
+    resultElement.className =
+        "result";
 
 
     switch (result.status) {
 
+
         case "found":
 
-            resultElement.classList.add("success");
+            resultElement
+                .classList
+                .add("success");
+
 
             resultElement.innerHTML = `
-                <div>Adres należy do:</div>
+                <div>
+                    Adres należy do:
+                </div>
+
                 <div class="result-region">
                     Rejon ${result.region}
                 </div>
+
+                ${
+                    result.verified === false
+                        ? `
+                            <small>
+                                ⚠️ Wpis nie został jeszcze
+                                zweryfikowany z kartką.
+                            </small>
+                          `
+                        : ""
+                }
             `;
 
             break;
@@ -236,13 +523,24 @@ function displayResult(result) {
 
         case "conflict":
 
-            resultElement.classList.add("warning");
+            resultElement
+                .classList
+                .add("warning");
+
 
             resultElement.innerHTML = `
-                <strong>⚠️ Niejednoznaczne dane</strong>
+                <strong>
+                    ⚠️ Niejednoznaczne dane
+                </strong>
+
                 <p>
                     Ten adres pasuje do kilku rejonów:
-                    ${result.regions.join(", ")}
+                    ${result.matches
+                        .map(
+                            item =>
+                                item.region
+                        )
+                        .join(", ")}
                 </p>
             `;
 
@@ -251,10 +549,16 @@ function displayResult(result) {
 
         case "street-not-found":
 
-            resultElement.classList.add("error");
+            resultElement
+                .classList
+                .add("error");
+
 
             resultElement.innerHTML = `
-                <strong>Nie znaleziono ulicy.</strong>
+                <strong>
+                    Nie znaleziono ulicy.
+                </strong>
+
                 <p>
                     Sprawdź poprawność nazwy.
                 </p>
@@ -265,10 +569,39 @@ function displayResult(result) {
 
         case "invalid-number":
 
-            resultElement.classList.add("error");
+            resultElement
+                .classList
+                .add("error");
+
 
             resultElement.innerHTML = `
-                <strong>Nieprawidłowy numer budynku.</strong>
+                <strong>
+                    Nieprawidłowy numer budynku.
+                </strong>
+
+                <p>
+                    Wpisz np. 72, 20a lub 10b.
+                </p>
+            `;
+
+            break;
+
+
+        case "data-error":
+
+            resultElement
+                .classList
+                .add("error");
+
+
+            resultElement.innerHTML = `
+                <strong>
+                    Nie udało się wczytać danych.
+                </strong>
+
+                <p>
+                    Spróbuj odświeżyć stronę.
+                </p>
             `;
 
             break;
@@ -276,13 +609,20 @@ function displayResult(result) {
 
         case "not-found":
 
-            resultElement.classList.add("error");
+            resultElement
+                .classList
+                .add("error");
+
 
             resultElement.innerHTML = `
-                <strong>Nie znaleziono rejonu.</strong>
+                <strong>
+                    Nie znaleziono rejonu.
+                </strong>
+
                 <p>
-                    Ulica istnieje w bazie, ale podany numer
-                    nie pasuje do żadnego rejonu.
+                    Ulica istnieje w bazie,
+                    ale podany numer nie pasuje
+                    do żadnego rejonu.
                 </p>
             `;
 
