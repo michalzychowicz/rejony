@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edytor rejonów</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 15px;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .street-header {
+            display: flex;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .street-header > div {
+            flex: 1;
+        }
+
+        button {
+            border: 0;
+            border-radius: 6px;
+            padding: 11px 16px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .primary {
+            background: #222;
+            color: white;
+        }
+
+        .secondary {
+            background: #e8e8e8;
+            color: #222;
+        }
+
+        .danger {
+            background: #b00020;
+            color: white;
+        }
+
+        .success {
+            background: #087a37;
+            color: white;
+        }
+
+        .assignment {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .assignment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .assignment-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .rule {
+            background: #f6f6f6;
+            border-radius: 7px;
+            padding: 12px;
+            margin: 10px 0;
+        }
+
+        .rule-row {
+            display: grid;
+            grid-template-columns:
+                160px 1fr 1fr 130px auto;
+            gap: 8px;
+            align-items: end;
+        }
+
+        .small-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .source {
+            margin-top: 15px;
+            padding: 10px;
+            background: #fff8d8;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .empty {
+            color: #777;
+            padding: 20px 0;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .message.ok {
+            display: block;
+            background: #e7f6ec;
+            color: #087a37;
+        }
+
+        .message.error {
+            display: block;
+            background: #fde8ec;
+            color: #b00020;
+        }
+
+        @media (max-width: 800px) {
+
+            .rule-row {
+                grid-template-columns: 1fr;
+            }
+
+            .street-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .assignment-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Edytor rejonów</h1>
+
+    <p class="description">
+        Edycja danych zapisanych w
+        <code>data/rejony.json</code>.
+    </p>
+
+
+    <div id="message" class="message"></div>
+
+
+    <section class="card">
+
+        <div class="street-header">
+
+            <div>
+                <label for="streetSelect">
+                    Ulica
+                </label>
+
+                <input
+                    id="streetSelect"
+                    list="streetList"
+                    placeholder="Wpisz nazwę ulicy"
+                    autocomplete="off"
+                >
+
+                <datalist id="streetList"></datalist>
+            </div>
+
+            <button
+                class="primary"
+                id="loadStreet"
+            >
+                Edytuj
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section
+        id="editor"
+        class="card"
+        style="display:none"
+    >
+
+        <div>
+            <label for="streetName">
+                Nazwa ulicy
+            </label>
+
+            <input id="streetName">
+        </div>
+
+
+        <div id="assignments"></div>
+
+
+        <div class="actions">
+
+            <button
+                class="secondary"
+                id="addAssignment"
+            >
+                + Dodaj rejon
+            </button>
+
+            <button
+                class="primary"
+                id="saveStreet"
+            >
+                Zapisz zmiany
+            </button>
+
+            <button
+                class="danger"
+                id="deleteStreet"
+            >
+                Usuń ulicę
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section class="card">
+
+        <h2>Dodaj nową ulicę</h2>
+
+        <div class="actions">
+
+            <button
+                class="secondary"
+                id="newStreet"
+            >
+                + Nowa ulica
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section class="card">
+
+        <h2>Plik JSON</h2>
+
+        <p>
+            Po zakończeniu edycji pobierz
+            zmodyfikowany plik i podmień
+            <code>data/rejony.json</code>
+            w repozytorium.
+        </p>
+
+        <div class="actions">
+
+            <button
+                class="success"
+                id="downloadJson"
+            >
+                Pobierz rejony.json
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script>
+
+let data;
+let currentStreet = null;
+
+
+/* ========================================
+   WCZYTYWANIE
+======================================== */
+
+fetch("./data/rejony.json")
+
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
+
+        return response.json();
+    })
+
+    .then(json => {
+
+        data = json;
+
+        refreshStreetList();
+    })
+
+    .catch(error => {
+
+        showMessage(
+            "Nie udało się wczytać rejony.json.",
+            "error"
+        );
+
+        console.error(error);
+    });
+
+
+/* ========================================
+   LISTA ULIC
+======================================== */
+
+function refreshStreetList() {
+
+    const list =
+        document.getElementById(
+            "streetList"
+        );
+
+    list.innerHTML = "";
+
+
+    const streets = [...data.streets]
+        .sort(
+            (a, b) =>
+                a.street.localeCompare(
+                    b.street,
+                    "pl"
+                )
+        );
+
+
+    for (const street of streets) {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value =
+            street.street;
+
+        list.appendChild(
+            option
+        );
+    }
+}
+
+
+/* ========================================
+   OTWIERANIE ULICY
+======================================== */
+
+document
+    .getElementById("loadStreet")
+    .addEventListener(
+        "click",
+        openSelectedStreet
+    );
+
+
+function openSelectedStreet() {
+
+    const value =
+        document
+            .getElementById(
+                "streetSelect"
+            )
+            .value
+            .trim();
+
+
+    const street =
+        data.streets.find(
+            item =>
+                item.street
+                    .toLowerCase() ===
+                value.toLowerCase()
+        );
+
+
+    if (!street) {
+
+        showMessage(
+            "Nie znaleziono takiej ulicy.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    currentStreet = street;
+
+    renderEditor();
+}
+
+
+/* ========================================
+   EDYTOR
+======================================== */
+
+function renderEditor() {
+
+    const editor =
+        document.getElementById(
+            "editor"
+        );
+
+
+    editor.style.display =
+        "block";
+
+
+    document.getElementById(
+        "streetName"
+    ).value =
+        currentStreet.street;
+
+
+    renderAssignments();
+}
+
+
+/* ========================================
+   REJONY
+======================================== */
+
+function renderAssignments() {
+
+    const container =
+        document.getElementById(
+            "assignments"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (
+        currentStreet.assignments.length === 0
+    ) {
+
+        container.innerHTML = `
+            <div class="empty">
+                Brak przypisanych rejonów.
+            </div>
+        `;
+
+        return;
+    }
+
+
+    currentStreet.assignments
+        .forEach(
+            (assignment, index) => {
+
+                container.appendChild(
+                    createAssignmentElement(
+                        assignment,
+                        index
+                    )
+                );
+            }
+        );
+}
+
+
+/* ========================================
+   ELEMENT REJONU
+======================================== */
+
+function createAssignmentElement(
+    assignment,
+    assignmentIndex
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.className =
+        "assignment";
+
+
+    div.innerHTML = `
+
+        <div class="assignment-header">
+
+            <div class="assignment-title">
+                Rejon
+
+                <input
+                    type="number"
+                    class="region-number"
+                    value="${assignment.region}"
+                    style="
+                        width:90px;
+                        display:inline-block;
+                    "
+                >
+            </div>
+
+            <button
+                class="danger remove-assignment"
+            >
+                Usuń rejon
+            </button>
+
+        </div>
+
+
+        <div
+            class="rules-container"
+        ></div>
+
+
+        <button
+            class="secondary add-rule"
+        >
+            + Dodaj regułę
+        </button>
+
+
+        <div class="source">
+
+            <strong>
+                Oryginalny zapis:
+            </strong>
+
+            <br>
+
+            ${escapeHtml(
+                assignment.sourceRule ??
+                "brak"
+            )}
+
+        </div>
+    `;
+
+
+    const rulesContainer =
+        div.querySelector(
+            ".rules-container"
+        );
+
+
+    assignment.rules.forEach(
+        (rule, ruleIndex) => {
+
+            rulesContainer.appendChild(
+                createRuleElement(
+                    rule,
+                    assignmentIndex,
+                    ruleIndex
+                )
+            );
+        }
+    );
+
+
+    div.querySelector(
+        ".add-rule"
+    ).addEventListener(
+        "click",
+        () => {
+
+            readEditorIntoData();
+
+            currentStreet
+                .assignments[
+                    assignmentIndex
+                ]
+                .rules
+                .push({
+                    type: "list",
+                    values: []
+                });
+
+            renderAssignments();
+        }
+    );
+
+
+    div.querySelector(
+        ".remove-assignment"
+    ).addEventListener(
+        "click",
+        () => {
+
+            if (
+                !confirm(
+                    "Usunąć ten rejon z ulicy?"
+                )
+            ) {
+                return;
+            }
+
+            currentStreet
+                .assignments
+                .splice(
+                    assignmentIndex,
+                    1
+                );
+
+            renderAssignments();
+        }
+    );
+
+
+    return div;
+}
+
+
+/* ========================================
+   REGUŁA
+======================================== */
+
+function createRuleElement(
+    rule,
+    assignmentIndex,
+    ruleIndex
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.className =
+        "rule";
+
+
+    div.dataset.assignment =
+        assignmentIndex;
+
+    div.dataset.rule =
+        ruleIndex;
+
+
+    div.innerHTML = `
+
+        <div class="rule-row">
+
+            <div>
+
+                <div class="small-label">
+                    Typ
+                </div>
+
+                <select class="rule-type">
+
+                    <option
+                        value="all"
+                        ${
+                            rule.type === "all"
+                                ? "selected"
+                                : ""
+                        }
+                    >
+                        Cała ulica
+                    </option>
+
+                    <option
+                        value="allExcept"
+                        ${
+                            rule.type === "allExcept"
+                                ? "selected"
+                                : ""
+                        }
+                    >
+                        Cała poza wyjątkami
+                    </option>
+
+                    <option
+                        value="list"
+                        ${
+                            rule.type === "list"
+                                ? "selected"
+                                : ""
+                        }
+                    >
+                        Konkretne numery
+                    </option>
+
+                    <option
+                        value="range"
+                        ${
+                            rule.type === "range"
+                                ? "selected"
+                                : ""
+                        }
+                    >
+                        Zakres
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <div class="small-label">
+                    Od / numery
+                </div>
+
+                <input
+                    class="rule-main"
+                    value="${escapeHtml(
+                        ruleMainValue(
+                            rule
+                        )
+                    )}"
+                >
+
+            </div>
+
+
+            <div>
+
+                <div class="small-label">
+                    Do
+                </div>
+
+                <input
+                    class="rule-to"
+                    value="${
+                        rule.type === "range" &&
+                        rule.to !== null
+                            ? rule.to
+                            : ""
+                    }"
+                >
+
+            </div>
+
+
+            <div>
+
+                <div class="small-label">
+                    Parzystość
+                </div>
+
+                <select
+                    class="rule-parity"
+                >
+
+                    <option value="">
+                        wszystkie
+                    </option>
+
+                    <option
+                        value="even"
+                        ${
+                            rule.parity === "even"
+                                ? "selected"
+                                : ""
+                        }
+                    >
+                        parzyste
+                    </option>
+
+                    <option
+                        value="odd"
+                        ${
+                            rule.parity === "odd"
+                                ? "selected"
+                                : ""
+                        }
+                    >
+                        nieparzyste
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="danger remove-rule"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            style="margin-top:10px"
+        >
+
+            <div class="small-label">
+                Wyjątki
+                (oddziel przecinkami)
+            </div>
+
+            <input
+                class="rule-exclude"
+                value="${escapeHtml(
+                    exclusionsToText(
+                        rule.exclude
+                    )
+                )}"
+            >
+
+        </div>
+    `;
+
+
+    div.querySelector(
+        ".remove-rule"
+    ).addEventListener(
+        "click",
+        () => {
+
+            readEditorIntoData();
+
+            currentStreet
+                .assignments[
+                    assignmentIndex
+                ]
+                .rules
+                .splice(
+                    ruleIndex,
+                    1
+                );
+
+            renderAssignments();
+        }
+    );
+
+
+    return div;
+}
+
+
+/* ========================================
+   ODCZYT FORMULARZA
+======================================== */
+
+function readEditorIntoData() {
+
+    if (!currentStreet) {
+        return;
+    }
+
+
+    currentStreet.street =
+        document
+            .getElementById(
+                "streetName"
+            )
+            .value
+            .trim();
+
+
+    const assignmentElements =
+        document.querySelectorAll(
+            ".assignment"
+        );
+
+
+    assignmentElements.forEach(
+        (
+            assignmentElement,
+            assignmentIndex
+        ) => {
+
+            const assignment =
+                currentStreet
+                    .assignments[
+                        assignmentIndex
+                    ];
+
+
+            assignment.region =
+                Number(
+                    assignmentElement
+                        .querySelector(
+                            ".region-number"
+                        )
+                        .value
+                );
+
+
+            const ruleElements =
+                assignmentElement
+                    .querySelectorAll(
+                        ".rule"
+                    );
+
+
+            assignment.rules = [];
+
+
+            ruleElements.forEach(
+                ruleElement => {
+
+                    const type =
+                        ruleElement
+                            .querySelector(
+                                ".rule-type"
+                            )
+                            .value;
+
+
+                    const main =
+                        ruleElement
+                            .querySelector(
+                                ".rule-main"
+                            )
+                            .value
+                            .trim();
+
+
+                    const to =
+                        ruleElement
+                            .querySelector(
+                                ".rule-to"
+                            )
+                            .value
+                            .trim();
+
+
+                    const parity =
+                        ruleElement
+                            .querySelector(
+                                ".rule-parity"
+                            )
+                            .value;
+
+
+                    const exclude =
+                        parseExclusions(
+                            ruleElement
+                                .querySelector(
+                                    ".rule-exclude"
+                                )
+                                .value
+                        );
+
+
+                    const rule = {
+                        type
+                    };
+
+
+                    if (
+                        type === "list"
+                    ) {
+
+                        rule.values =
+                            splitValues(
+                                main
+                            );
+                    }
+
+
+                    if (
+                        type === "range"
+                    ) {
+
+                        rule.from =
+                            Number(main);
+
+                        rule.to =
+                            to === ""
+                                ? null
+                                : Number(to);
+
+
+                        if (parity) {
+                            rule.parity =
+                                parity;
+                        }
+                    }
+
+
+                    if (
+                        exclude.length > 0
+                    ) {
+
+                        rule.exclude =
+                            exclude;
+                    }
+
+
+                    assignment
+                        .rules
+                        .push(rule);
+                }
+            );
+        }
+    );
+}
+
+
+/* ========================================
+   ZAPIS ULICY
+======================================== */
+
+document
+    .getElementById(
+        "saveStreet"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            readEditorIntoData();
+
+            refreshStreetList();
+
+            document.getElementById(
+                "streetSelect"
+            ).value =
+                currentStreet.street;
+
+
+            showMessage(
+                "Zmiany zapisano w pamięci. Pamiętaj o pobraniu nowego rejony.json.",
+                "ok"
+            );
+        }
+    );
+
+
+/* ========================================
+   NOWY REJON
+======================================== */
+
+document
+    .getElementById(
+        "addAssignment"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            readEditorIntoData();
+
+
+            currentStreet
+                .assignments
+                .push({
+
+                    region: 1,
+
+                    rules: [
+                        {
+                            type: "all"
+                        }
+                    ],
+
+                    verified: true,
+
+                    sourceRule:
+                        "dodano w edytorze"
+                });
+
+
+            renderAssignments();
+        }
+    );
+
+
+/* ========================================
+   NOWA ULICA
+======================================== */
+
+document
+    .getElementById(
+        "newStreet"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            const street = {
+
+                street:
+                    "Nowa ulica",
+
+                assignments: [
+                    {
+                        region: 1,
+
+                        rules: [
+                            {
+                                type: "all"
+                            }
+                        ],
+
+                        verified: true,
+
+                        sourceRule:
+                            "dodano w edytorze"
+                    }
+                ]
+            };
+
+
+            data.streets.push(
+                street
+            );
+
+
+            currentStreet =
+                street;
+
+
+            refreshStreetList();
+
+            renderEditor();
+
+
+            document.getElementById(
+                "streetSelect"
+            ).value =
+                street.street;
+        }
+    );
+
+
+/* ========================================
+   USUWANIE ULICY
+======================================== */
+
+document
+    .getElementById(
+        "deleteStreet"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            if (!currentStreet) {
+                return;
+            }
+
+
+            if (
+                !confirm(
+                    `Usunąć ulicę "${currentStreet.street}"?`
+                )
+            ) {
+                return;
+            }
+
+
+            const index =
+                data.streets.indexOf(
+                    currentStreet
+                );
+
+
+            if (index !== -1) {
+
+                data.streets.splice(
+                    index,
+                    1
+                );
+            }
+
+
+            currentStreet =
+                null;
+
+
+            document.getElementById(
+                "editor"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "streetSelect"
+            ).value =
+                "";
+
+
+            refreshStreetList();
+
+
+            showMessage(
+                "Ulica została usunięta.",
+                "ok"
+            );
+        }
+    );
+
+
+/* ========================================
+   POBIERANIE JSON
+======================================== */
+
+document
+    .getElementById(
+        "downloadJson"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            if (currentStreet) {
+                readEditorIntoData();
+            }
+
+
+            data.streets.sort(
+                (a, b) =>
+                    a.street.localeCompare(
+                        b.street,
+                        "pl"
+                    )
+            );
+
+
+            const json =
+                JSON.stringify(
+                    data,
+                    null,
+                    2
+                );
+
+
+            const blob =
+                new Blob(
+                    [json],
+                    {
+                        type:
+                            "application/json"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href =
+                url;
+
+            link.download =
+                "rejony.json";
+
+
+            link.click();
+
+
+            URL.revokeObjectURL(
+                url
+            );
+        }
+    );
+
+
+/* ========================================
+   HELPERY
+======================================== */
+
+function ruleMainValue(rule) {
+
+    if (
+        rule.type === "list"
+    ) {
+
+        return (
+            rule.values ??
+            []
+        ).join(", ");
+    }
+
+
+    if (
+        rule.type === "range"
+    ) {
+
+        return rule.from ?? "";
+    }
+
+
+    return "";
+}
+
+
+function splitValues(value) {
+
+    if (!value.trim()) {
+        return [];
+    }
+
+
+    return value
+        .split(",")
+        .map(
+            item =>
+                item.trim()
+                    .toLowerCase()
+        )
+        .filter(Boolean);
+}
+
+
+function exclusionsToText(
+    exclusions = []
+) {
+
+    return exclusions
+        .map(item => {
+
+            if (
+                typeof item === "string"
+            ) {
+                return item;
+            }
+
+
+            if (
+                item &&
+                typeof item === "object"
+            ) {
+
+                let text =
+                    `${item.from}-${item.to ?? "∞"}`;
+
+
+                if (
+                    item.parity === "even"
+                ) {
+
+                    text += " parzyste";
+                }
+
+
+                if (
+                    item.parity === "odd"
+                ) {
+
+                    text += " nieparzyste";
+                }
+
+
+                return text;
+            }
+
+
+            return "";
+        })
+        .filter(Boolean)
+        .join(", ");
+}
+
+
+function parseExclusions(value) {
+
+    if (!value.trim()) {
+        return [];
+    }
+
+
+    return value
+        .split(",")
+        .map(
+            item =>
+                item.trim()
+                    .toLowerCase()
+        )
+        .filter(Boolean)
+        .map(item => {
+
+            /*
+                zakres np.
+                90-96
+                90-96 parzyste
+                90-96 nieparzyste
+            */
+
+            const match =
+                item.match(
+                    /^(\d+)-(\d+|∞)(?:\s+(parzyste|nieparzyste))?$/
+                );
+
+
+            if (!match) {
+                return item;
+            }
+
+
+            const result = {
+
+                from:
+                    Number(
+                        match[1]
+                    ),
+
+                to:
+                    match[2] === "∞"
+                        ? null
+                        : Number(
+                            match[2]
+                        )
+            };
+
+
+            if (
+                match[3] ===
+                "parzyste"
+            ) {
+
+                result.parity =
+                    "even";
+            }
+
+
+            if (
+                match[3] ===
+                "nieparzyste"
+            ) {
+
+                result.parity =
+                    "odd";
+            }
+
+
+            return result;
+        });
+}
+
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        );
+}
+
+
+function showMessage(
+    text,
+    type
+) {
+
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+
+    message.className =
+        `message ${type}`;
+
+
+    message.textContent =
+        text;
+}
+
+</script>
+
+</body>
+</html>
