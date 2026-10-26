@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Test bazy rejonów</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 15px;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .summary-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .summary-number {
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .section h2 {
+            margin-top: 0;
+        }
+
+        .problem {
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .problem:last-child {
+            border-bottom: none;
+        }
+
+        .street {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .numbers {
+            margin-top: 8px;
+            line-height: 1.6;
+        }
+
+        .source {
+            margin-top: 8px;
+            padding: 8px;
+            background: #f3f3f3;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        .warning {
+            color: #a05a00;
+        }
+
+        .error {
+            color: #b00020;
+        }
+
+        .success {
+            color: #087a37;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            background: #222;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        code {
+            background: #eee;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Test bazy rejonów</h1>
+
+    <p class="description">
+        Automatyczne sprawdzanie pliku
+        <code>data/rejony.json</code>.
+        Testowane są numery budynków od 1 do 500.
+    </p>
+
+    <button id="runTest">
+        Uruchom test ponownie
+    </button>
+
+
+    <div id="loading">
+        Wczytywanie danych...
+    </div>
+
+
+    <div id="results" class="hidden">
+
+        <div class="summary">
+
+            <div class="summary-box">
+                Ulice
+                <div
+                    class="summary-number"
+                    id="streetCount"
+                >
+                    0
+                </div>
+            </div>
+
+            <div class="summary-box">
+                Konflikty
+                <div
+                    class="summary-number"
+                    id="conflictCount"
+                >
+                    0
+                </div>
+            </div>
+
+            <div class="summary-box">
+                Podejrzane dziury
+                <div
+                    class="summary-number"
+                    id="gapCount"
+                >
+                    0
+                </div>
+            </div>
+
+            <div class="summary-box">
+                Błędy reguł
+                <div
+                    class="summary-number"
+                    id="ruleErrorCount"
+                >
+                    0
+                </div>
+            </div>
+
+        </div>
+
+
+        <section class="section">
+
+            <h2 class="error">
+                Konflikty rejonów
+            </h2>
+
+            <p>
+                Adres pasuje jednocześnie
+                do więcej niż jednego rejonu.
+            </p>
+
+            <div id="conflicts"></div>
+
+        </section>
+
+
+        <section class="section">
+
+            <h2 class="warning">
+                Podejrzane dziury
+            </h2>
+
+            <p>
+                Numery znajdujące się pomiędzy
+                obsługiwanymi numerami ulicy,
+                które nie należą do żadnego rejonu.
+            </p>
+
+            <div id="gaps"></div>
+
+        </section>
+
+
+        <section class="section">
+
+            <h2 class="warning">
+                Problemy z regułami
+            </h2>
+
+            <div id="ruleErrors"></div>
+
+        </section>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   KONFIGURACJA
+========================================== */
+
+const MAX_NUMBER = 500;
+
+let data;
+
+
+/* ==========================================
+   WCZYTANIE JSON
+========================================== */
+
+fetch("./data/rejony.json")
+
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
+
+        return response.json();
+    })
+
+    .then(json => {
+
+        data = json;
+
+        document
+            .getElementById("loading")
+            .classList
+            .add("hidden");
+
+        document
+            .getElementById("results")
+            .classList
+            .remove("hidden");
+
+        runTests();
+    })
+
+    .catch(error => {
+
+        document.getElementById(
+            "loading"
+        ).innerHTML =
+            "❌ Nie udało się wczytać rejony.json";
+
+        console.error(error);
+    });
+
+
+/* ==========================================
+   POMOCNICZE
+========================================== */
+
+function normalizeAddressNumber(value) {
+
+    return String(value)
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "");
+}
+
+
+function parseAddressNumber(value) {
+
+    const normalized =
+        normalizeAddressNumber(value);
+
+    const match =
+        normalized.match(
+            /^(\d+)([a-z]*)$/
+        );
+
+
+    if (!match) {
+        return null;
+    }
+
+
+    return {
+        full: normalized,
+        number: Number(match[1]),
+        suffix: match[2]
+    };
+}
+
+
+function matchesParity(
+    number,
+    parity
+) {
+
+    if (!parity) {
+        return true;
+    }
+
+
+    if (parity === "even") {
+        return number % 2 === 0;
+    }
+
+
+    if (parity === "odd") {
+        return number % 2 !== 0;
+    }
+
+
+    return true;
+}
+
+
+/* ==========================================
+   WYJĄTKI
+========================================== */
+
+function matchesException(
+    address,
+    exception
+) {
+
+    if (
+        typeof exception === "string"
+    ) {
+
+        return (
+            address.full ===
+            normalizeAddressNumber(
+                exception
+            )
+        );
+    }
+
+
+    if (
+        !exception ||
+        typeof exception !== "object"
+    ) {
+        return false;
+    }
+
+
+    if (
+        !matchesParity(
+            address.number,
+            exception.parity
+        )
+    ) {
+        return false;
+    }
+
+
+    if (address.suffix) {
+        return false;
+    }
+
+
+    if (
+        address.number <
+        exception.from
+    ) {
+        return false;
+    }
+
+
+    if (
+        exception.to !== null &&
+        address.number >
+        exception.to
+    ) {
+        return false;
+    }
+
+
+    return true;
+}
+
+
+function isExcluded(
+    address,
+    exclusions = []
+) {
+
+    return exclusions.some(
+        exception =>
+            matchesException(
+                address,
+                exception
+            )
+    );
+}
+
+
+/* ==========================================
+   SPRAWDZANIE REGUŁY
+========================================== */
+
+function matchesRule(
+    address,
+    rule
+) {
+
+    if (rule.type === "all") {
+
+        return !isExcluded(
+            address,
+            rule.exclude
+        );
+    }
+
+
+    if (rule.type === "allExcept") {
+
+        return !isExcluded(
+            address,
+            rule.exclude
+        );
+    }
+
+
+    if (rule.type === "list") {
+
+        const matches =
+            rule.values
+                .map(
+                    normalizeAddressNumber
+                )
+                .includes(
+                    address.full
+                );
+
+
+        if (!matches) {
+            return false;
+        }
+
+
+        return !isExcluded(
+            address,
+            rule.exclude
+        );
+    }
+
+
+    if (rule.type === "range") {
+
+        if (address.suffix) {
+            return false;
+        }
+
+
+        if (
+            address.number <
+            rule.from
+        ) {
+            return false;
+        }
+
+
+        if (
+            rule.to !== null &&
+            address.number >
+            rule.to
+        ) {
+            return false;
+        }
+
+
+        if (
+            !matchesParity(
+                address.number,
+                rule.parity
+            )
+        ) {
+            return false;
+        }
+
+
+        if (
+            isExcluded(
+                address,
+                rule.exclude
+            )
+        ) {
+            return false;
+        }
+
+
+        return true;
+    }
+
+
+    return false;
+}
+
+
+/* ==========================================
+   REJONY DLA ADRESU
+========================================== */
+
+function getRegionsForNumber(
+    street,
+    number
+) {
+
+    const address =
+        parseAddressNumber(
+            String(number)
+        );
+
+
+    const regions = [];
+
+
+    for (
+        const assignment
+        of street.assignments
+    ) {
+
+        const matches =
+            assignment.rules.some(
+                rule =>
+                    matchesRule(
+                        address,
+                        rule
+                    )
+            );
+
+
+        if (matches) {
+
+            regions.push(
+                assignment.region
+            );
+        }
+    }
+
+
+    return [
+        ...new Set(regions)
+    ];
+}
+
+
+/* ==========================================
+   WALIDACJA REGUŁ
+========================================== */
+
+function validateRules() {
+
+    const errors = [];
+
+
+    for (
+        const street
+        of data.streets
+    ) {
+
+        for (
+            const assignment
+            of street.assignments
+        ) {
+
+            for (
+                const rule
+                of assignment.rules
+            ) {
+
+                const validTypes = [
+                    "all",
+                    "allExcept",
+                    "list",
+                    "range"
+                ];
+
+
+                if (
+                    !validTypes.includes(
+                        rule.type
+                    )
+                ) {
+
+                    errors.push({
+                        street:
+                            street.street,
+
+                        region:
+                            assignment.region,
+
+                        message:
+                            `Nieznany typ reguły: ${rule.type}`,
+
+                        source:
+                            assignment.sourceRule
+                    });
+
+                    continue;
+                }
+
+
+                if (
+                    rule.type === "range"
+                ) {
+
+                    if (
+                        typeof rule.from !==
+                        "number"
+                    ) {
+
+                        errors.push({
+                            street:
+                                street.street,
+
+                            region:
+                                assignment.region,
+
+                            message:
+                                "Zakres nie posiada poprawnego 'from'.",
+
+                            source:
+                                assignment.sourceRule
+                        });
+                    }
+
+
+                    if (
+                        rule.to !== null &&
+                        rule.to !== undefined &&
+                        rule.from > rule.to
+                    ) {
+
+                        errors.push({
+                            street:
+                                street.street,
+
+                            region:
+                                assignment.region,
+
+                            message:
+                                `Odwrócony zakres: ${rule.from}-${rule.to}`,
+
+                            source:
+                                assignment.sourceRule
+                        });
+                    }
+
+
+                    if (
+                        rule.parity &&
+                        ![
+                            "even",
+                            "odd"
+                        ].includes(
+                            rule.parity
+                        )
+                    ) {
+
+                        errors.push({
+                            street:
+                                street.street,
+
+                            region:
+                                assignment.region,
+
+                            message:
+                                `Nieznana parzystość: ${rule.parity}`,
+
+                            source:
+                                assignment.sourceRule
+                        });
+                    }
+                }
+
+
+                if (
+                    rule.type === "list" &&
+                    !Array.isArray(
+                        rule.values
+                    )
+                ) {
+
+                    errors.push({
+                        street:
+                            street.street,
+
+                        region:
+                            assignment.region,
+
+                        message:
+                            "Reguła list nie posiada tablicy values.",
+
+                        source:
+                            assignment.sourceRule
+                    });
+                }
+            }
+        }
+    }
+
+
+    return errors;
+}
+
+
+/* ==========================================
+   TEST KONFLIKTÓW
+========================================== */
+
+function findConflicts() {
+
+    const result = [];
+
+
+    for (
+        const street
+        of data.streets
+    ) {
+
+        const conflicts = [];
+
+
+        for (
+            let number = 1;
+            number <= MAX_NUMBER;
+            number++
+        ) {
+
+            const regions =
+                getRegionsForNumber(
+                    street,
+                    number
+                );
+
+
+            if (
+                regions.length > 1
+            ) {
+
+                conflicts.push({
+                    number,
+                    regions
+                });
+            }
+        }
+
+
+        if (
+            conflicts.length > 0
+        ) {
+
+            result.push({
+                street,
+                conflicts
+            });
+        }
+    }
+
+
+    return result;
+}
+
+
+/* ==========================================
+   TEST DZIUR
+========================================== */
+
+function findGaps() {
+
+    const result = [];
+
+
+    for (
+        const street
+        of data.streets
+    ) {
+
+        const assigned = [];
+
+
+        for (
+            let number = 1;
+            number <= MAX_NUMBER;
+            number++
+        ) {
+
+            if (
+                getRegionsForNumber(
+                    street,
+                    number
+                ).length > 0
+            ) {
+
+                assigned.push(
+                    number
+                );
+            }
+        }
+
+
+        if (
+            assigned.length < 2
+        ) {
+            continue;
+        }
+
+
+        const min =
+            Math.min(
+                ...assigned
+            );
+
+        const max =
+            Math.max(
+                ...assigned
+            );
+
+
+        const gaps = [];
+
+
+        for (
+            let number = min;
+            number <= max;
+            number++
+        ) {
+
+            if (
+                getRegionsForNumber(
+                    street,
+                    number
+                ).length === 0
+            ) {
+
+                gaps.push(
+                    number
+                );
+            }
+        }
+
+
+        /*
+            Nie pokazujemy ogromnych dziur,
+            bo mogą być całkowicie prawidłowe.
+
+            Pokazujemy ulicę tylko wtedy,
+            gdy ma maksymalnie 30 brakujących
+            numerów pomiędzy przypisaniami.
+        */
+
+        if (
+            gaps.length > 0 &&
+            gaps.length <= 30
+        ) {
+
+            result.push({
+                street:
+                    street.street,
+
+                gaps
+            });
+        }
+    }
+
+
+    return result;
+}
+
+
+/* ==========================================
+   GRUPOWANIE KOLEJNYCH NUMERÓW
+========================================== */
+
+function compressNumbers(
+    numbers
+) {
+
+    if (
+        numbers.length === 0
+    ) {
+        return "";
+    }
+
+
+    const result = [];
+
+    let start =
+        numbers[0];
+
+    let previous =
+        numbers[0];
+
+
+    for (
+        let i = 1;
+        i < numbers.length;
+        i++
+    ) {
+
+        const current =
+            numbers[i];
+
+
+        if (
+            current ===
+            previous + 1
+        ) {
+
+            previous =
+                current;
+
+            continue;
+        }
+
+
+        if (
+            start === previous
+        ) {
+
+            result.push(
+                String(start)
+            );
+
+        } else {
+
+            result.push(
+                `${start}-${previous}`
+            );
+        }
+
+
+        start =
+            current;
+
+        previous =
+            current;
+    }
+
+
+    if (
+        start === previous
+    ) {
+
+        result.push(
+            String(start)
+        );
+
+    } else {
+
+        result.push(
+            `${start}-${previous}`
+        );
+    }
+
+
+    return result.join(", ");
+}
+
+
+/* ==========================================
+   WYŚWIETLANIE KONFLIKTÓW
+========================================== */
+
+function renderConflicts(
+    conflicts
+) {
+
+    const container =
+        document.getElementById(
+            "conflicts"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (
+        conflicts.length === 0
+    ) {
+
+        container.innerHTML =
+            `<p class="success">
+                ✓ Nie znaleziono konfliktów.
+            </p>`;
+
+        return;
+    }
+
+
+    for (
+        const item
+        of conflicts
+    ) {
+
+        /*
+            Grupujemy konflikty według
+            zestawu rejonów.
+        */
+
+        const groups = {};
+
+
+        for (
+            const conflict
+            of item.conflicts
+        ) {
+
+            const key =
+                conflict.regions
+                    .sort(
+                        (a, b) =>
+                            a - b
+                    )
+                    .join("/");
+
+
+            if (!groups[key]) {
+                groups[key] = [];
+            }
+
+
+            groups[key].push(
+                conflict.number
+            );
+        }
+
+
+        let html = `
+            <div class="problem">
+
+                <div class="street">
+                    ${item.street.street}
+                </div>
+        `;
+
+
+        for (
+            const [
+                regions,
+                numbers
+            ]
+            of Object.entries(groups)
+        ) {
+
+            html += `
+                <div class="numbers">
+
+                    Rejony
+                    <strong>
+                        ${regions}
+                    </strong>:
+
+                    ${compressNumbers(
+                        numbers
+                    )}
+
+                </div>
+            `;
+        }
+
+
+        /*
+            Pokazujemy również tekst
+            przepisany z kartki.
+        */
+
+        for (
+            const assignment
+            of item.street.assignments
+        ) {
+
+            html += `
+                <div class="source">
+
+                    Rejon
+                    ${assignment.region}:
+
+                    ${assignment.sourceRule ?? "brak sourceRule"}
+
+                </div>
+            `;
+        }
+
+
+        html += "</div>";
+
+
+        container.insertAdjacentHTML(
+            "beforeend",
+            html
+        );
+    }
+}
+
+
+/* ==========================================
+   WYŚWIETLANIE DZIUR
+========================================== */
+
+function renderGaps(
+    gaps
+) {
+
+    const container =
+        document.getElementById(
+            "gaps"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (
+        gaps.length === 0
+    ) {
+
+        container.innerHTML =
+            `<p class="success">
+                ✓ Nie znaleziono podejrzanych dziur.
+            </p>`;
+
+        return;
+    }
+
+
+    for (
+        const item
+        of gaps
+    ) {
+
+        container.insertAdjacentHTML(
+            "beforeend",
+
+            `
+                <div class="problem">
+
+                    <div class="street">
+                        ${item.street}
+                    </div>
+
+                    <div class="numbers">
+
+                        Brakujące numery:
+
+                        ${compressNumbers(
+                            item.gaps
+                        )}
+
+                    </div>
+
+                </div>
+            `
+        );
+    }
+}
+
+
+/* ==========================================
+   WYŚWIETLANIE BŁĘDÓW REGUŁ
+========================================== */
+
+function renderRuleErrors(
+    errors
+) {
+
+    const container =
+        document.getElementById(
+            "ruleErrors"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (
+        errors.length === 0
+    ) {
+
+        container.innerHTML =
+            `<p class="success">
+                ✓ Struktura reguł wygląda poprawnie.
+            </p>`;
+
+        return;
+    }
+
+
+    for (
+        const error
+        of errors
+    ) {
+
+        container.insertAdjacentHTML(
+            "beforeend",
+
+            `
+                <div class="problem">
+
+                    <div class="street">
+                        ${error.street}
+                    </div>
+
+                    <div>
+                        Rejon:
+                        ${error.region}
+                    </div>
+
+                    <div class="error">
+                        ${error.message}
+                    </div>
+
+                    <div class="source">
+                        ${error.source ?? ""}
+                    </div>
+
+                </div>
+            `
+        );
+    }
+}
+
+
+/* ==========================================
+   URUCHOMIENIE TESTÓW
+========================================== */
+
+function runTests() {
+
+    console.time(
+        "Test bazy"
+    );
+
+
+    const conflicts =
+        findConflicts();
+
+    const gaps =
+        findGaps();
+
+    const ruleErrors =
+        validateRules();
+
+
+    document.getElementById(
+        "streetCount"
+    ).textContent =
+        data.streets.length;
+
+
+    document.getElementById(
+        "conflictCount"
+    ).textContent =
+        conflicts.length;
+
+
+    document.getElementById(
+        "gapCount"
+    ).textContent =
+        gaps.length;
+
+
+    document.getElementById(
+        "ruleErrorCount"
+    ).textContent =
+        ruleErrors.length;
+
+
+    renderConflicts(
+        conflicts
+    );
+
+    renderGaps(
+        gaps
+    );
+
+    renderRuleErrors(
+        ruleErrors
+    );
+
+
+    console.timeEnd(
+        "Test bazy"
+    );
+}
+
+
+/* ==========================================
+   PRZYCISK
+========================================== */
+
+document
+    .getElementById(
+        "runTest"
+    )
+    .addEventListener(
+        "click",
+        runTests
+    );
+
+</script>
+
+</body>
+</html>
