@@ -161,7 +161,7 @@
             {
               "type": "list",
               "values": [
-                "dopisek odręczny: 20f",
+                "20f",
                 "20g",
                 "20h"
               ]
@@ -6017,29 +6017,11 @@
               "type": "range",
               "from": 192,
               "to": 382,
-              "parity": "even"
-            },
-            {
-              "type": "list",
-              "values": [
-                "bez 246"
-              ]
-            },
-            {
-              "type": "list",
-              "values": [
-                "260"
-              ]
-            },
-            {
-              "type": "list",
-              "values": [
-                "272"
-              ]
-            },
-            {
-              "type": "list",
-              "values": [
+              "parity": "even",
+              "exclude": [
+                "246",
+                "260",
+                "272",
                 "340"
               ]
             },
@@ -11582,15 +11564,18 @@
               "type": "allExcept",
               "exclude": [
                 {
-                  "from": 23,
-                  "to": 21
+                  "from": 21,
+                  "to": 23
                 },
-                "bez 12-16"
+                {
+                  "from": 12,
+                  "to": 16
+                }
               ]
             }
           ],
           "verified": false,
-          "sourceRule": "bez 23-21 i bez 12-16"
+          "sourceRule": "bez 21-23 i bez 12-16"
         },
         {
           "region": 25,
