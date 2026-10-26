@@ -11677,10 +11677,10 @@
               ]
             },
             {
-              "type": "list",
-              "values": [
-                "od 35 do końca"
-              ]
+              "type": "range",
+              "from": 35,
+              "to": null,
+              "parity": "odd"
             },
             {
               "type": "list",
@@ -11689,10 +11689,10 @@
               ]
             },
             {
-              "type": "list",
-              "values": [
-                "od 44 do końca"
-              ]
+              "type": "range",
+              "from": 44,
+              "to": null,
+              "parity": "even"
             }
           ],
           "verified": false,
