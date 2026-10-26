@@ -963,6 +963,23 @@
           ],
           "verified": false,
           "sourceRule": "parzyste: 78, 80; nieparzyste: 89-119"
+        },
+        {
+          "region": 1,
+          "rules": [
+            {
+              "type": "range",
+              "from": 3,
+              "to": 45
+            },
+            {
+              "type": "range",
+              "from": 4,
+              "to": null
+            }
+          ],
+          "verified": true,
+          "sourceRule": "dodano w edytorze"
         }
       ]
     },
@@ -1275,6 +1292,21 @@
       ]
     },
     {
+      "street": "Chłopickiego",
+      "assignments": [
+        {
+          "region": 18,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Chopina",
       "assignments": [
         {
@@ -1344,21 +1376,6 @@
           ],
           "verified": false,
           "sourceRule": "bez 4, 6, 9, 10, 11, 12, 15a"
-        }
-      ]
-    },
-    {
-      "street": "Chłopickiego",
-      "assignments": [
-        {
-          "region": 18,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
         }
       ]
     },
@@ -1502,194 +1519,6 @@
       "assignments": [
         {
           "region": 4,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Dembińskiego",
-      "assignments": [
-        {
-          "region": 13,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Dmowskiego",
-      "assignments": [
-        {
-          "region": 16,
-          "rules": [
-            {
-              "type": "range",
-              "from": 4,
-              "to": 16,
-              "parity": "even"
-            },
-            {
-              "type": "range",
-              "from": 1,
-              "to": 45,
-              "parity": "odd"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "parzyste: 4-16; nieparzyste: 1-45"
-        },
-        {
-          "region": 25,
-          "rules": [
-            {
-              "type": "range",
-              "from": 51,
-              "to": null,
-              "parity": "odd"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "nieparzyste: od 51 do końca"
-        }
-      ]
-    },
-    {
-      "street": "Dobrzańskiego",
-      "assignments": [
-        {
-          "region": 11,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Dojazdowa",
-      "assignments": [
-        {
-          "region": 24,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Domeyki",
-      "assignments": [
-        {
-          "region": 9,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Dożynkowa",
-      "assignments": [
-        {
-          "region": 39,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Dunajcowa",
-      "assignments": [
-        {
-          "region": 16,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Dunajewskiego",
-      "assignments": [
-        {
-          "region": 22,
-          "rules": [
-            {
-              "type": "range",
-              "from": 2,
-              "to": 22,
-              "parity": "even"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "parzyste: 2-22"
-        },
-        {
-          "region": 23,
-          "rules": [
-            {
-              "type": "range",
-              "from": 3,
-              "to": 21,
-              "parity": "odd"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "nieparzyste: 3-21"
-        }
-      ]
-    },
-    {
-      "street": "Dunikowskiego",
-      "assignments": [
-        {
-          "region": 25,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Dwernickiego",
-      "assignments": [
-        {
-          "region": 27,
           "rules": [
             {
               "type": "all"
@@ -1896,6 +1725,21 @@
       ]
     },
     {
+      "street": "Dembińskiego",
+      "assignments": [
+        {
+          "region": 13,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Długosza",
       "assignments": [
         {
@@ -1956,6 +1800,179 @@
       "assignments": [
         {
           "region": 37,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Dmowskiego",
+      "assignments": [
+        {
+          "region": 16,
+          "rules": [
+            {
+              "type": "range",
+              "from": 4,
+              "to": 16,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 1,
+              "to": 45,
+              "parity": "odd"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "parzyste: 4-16; nieparzyste: 1-45"
+        },
+        {
+          "region": 25,
+          "rules": [
+            {
+              "type": "range",
+              "from": 51,
+              "to": null,
+              "parity": "odd"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "nieparzyste: od 51 do końca"
+        }
+      ]
+    },
+    {
+      "street": "Dobrzańskiego",
+      "assignments": [
+        {
+          "region": 11,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Dojazdowa",
+      "assignments": [
+        {
+          "region": 24,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Domeyki",
+      "assignments": [
+        {
+          "region": 9,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Dożynkowa",
+      "assignments": [
+        {
+          "region": 39,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Dunajcowa",
+      "assignments": [
+        {
+          "region": 16,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Dunajewskiego",
+      "assignments": [
+        {
+          "region": 22,
+          "rules": [
+            {
+              "type": "range",
+              "from": 2,
+              "to": 22,
+              "parity": "even"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "parzyste: 2-22"
+        },
+        {
+          "region": 23,
+          "rules": [
+            {
+              "type": "range",
+              "from": 3,
+              "to": 21,
+              "parity": "odd"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "nieparzyste: 3-21"
+        }
+      ]
+    },
+    {
+      "street": "Dunikowskiego",
+      "assignments": [
+        {
+          "region": 25,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Dwernickiego",
+      "assignments": [
+        {
+          "region": 27,
           "rules": [
             {
               "type": "all"
@@ -2142,21 +2159,6 @@
       ]
     },
     {
-      "street": "Gazdowska",
-      "assignments": [
-        {
-          "region": 25,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
       "street": "Gałczyńskiego",
       "assignments": [
         {
@@ -2167,6 +2169,21 @@
             }
           ],
           "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Gazdowska",
+      "assignments": [
+        {
+          "region": 25,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
           "sourceRule": "cała"
         }
       ]
@@ -2191,6 +2208,21 @@
       "assignments": [
         {
           "region": 25,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Głowackiego",
+      "assignments": [
+        {
+          "region": 24,
           "rules": [
             {
               "type": "all"
@@ -2271,6 +2303,21 @@
       "assignments": [
         {
           "region": 11,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Górki Zawadzkie",
+      "assignments": [
+        {
+          "region": 10,
           "rules": [
             {
               "type": "all"
@@ -2587,36 +2634,6 @@
       "assignments": [
         {
           "region": 2,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Górki Zawadzkie",
-      "assignments": [
-        {
-          "region": 10,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Głowackiego",
-      "assignments": [
-        {
-          "region": 24,
           "rules": [
             {
               "type": "all"
@@ -3329,6 +3346,21 @@
       ]
     },
     {
+      "street": "Jaśminowa",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Jaworowa",
       "assignments": [
         {
@@ -3354,21 +3386,6 @@
             }
           ],
           "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Jaśminowa",
-      "assignments": [
-        {
-          "region": 32,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -3902,6 +3919,49 @@
       ]
     },
     {
+      "street": "Kołłątaja",
+      "assignments": [
+        {
+          "region": 26,
+          "rules": [
+            {
+              "type": "range",
+              "from": 14,
+              "to": 34,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 19,
+              "to": 25,
+              "parity": "odd"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "parzyste: 14-34; nieparzyste: 19-25"
+        },
+        {
+          "region": 27,
+          "rules": [
+            {
+              "type": "range",
+              "from": 2,
+              "to": 8,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 1,
+              "to": 7,
+              "parity": "odd"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "parzyste: 2-8; nieparzyste: 1-7"
+        }
+      ]
+    },
+    {
       "street": "Komorowskiego",
       "assignments": [
         {
@@ -4085,64 +4145,6 @@
       ]
     },
     {
-      "street": "Kowalska",
-      "assignments": [
-        {
-          "region": 6,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Kołłątaja",
-      "assignments": [
-        {
-          "region": 26,
-          "rules": [
-            {
-              "type": "range",
-              "from": 14,
-              "to": 34,
-              "parity": "even"
-            },
-            {
-              "type": "range",
-              "from": 19,
-              "to": 25,
-              "parity": "odd"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "parzyste: 14-34; nieparzyste: 19-25"
-        },
-        {
-          "region": 27,
-          "rules": [
-            {
-              "type": "range",
-              "from": 2,
-              "to": 8,
-              "parity": "even"
-            },
-            {
-              "type": "range",
-              "from": 1,
-              "to": 7,
-              "parity": "odd"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "parzyste: 2-8; nieparzyste: 1-7"
-        }
-      ]
-    },
-    {
       "street": "Kościuszki",
       "assignments": [
         {
@@ -4230,10 +4232,40 @@
       ]
     },
     {
+      "street": "Kowalska",
+      "assignments": [
+        {
+          "region": 6,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Krakowska",
       "assignments": [
         {
           "region": 25,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Krańcowa",
+      "assignments": [
+        {
+          "region": 28,
           "rules": [
             {
               "type": "all"
@@ -4301,17 +4333,35 @@
       ]
     },
     {
-      "street": "Krańcowa",
+      "street": "Kręta",
       "assignments": [
         {
-          "region": 28,
+          "region": 10,
           "rules": [
             {
-              "type": "all"
+              "type": "list",
+              "values": [
+                "1",
+                "2"
+              ]
             }
           ],
           "verified": false,
-          "sourceRule": "cała"
+          "sourceRule": "1 i 2"
+        },
+        {
+          "region": 29,
+          "rules": [
+            {
+              "type": "allExcept",
+              "exclude": [
+                "1",
+                "2"
+              ]
+            }
+          ],
+          "verified": false,
+          "sourceRule": "bez 1 i 2"
         }
       ]
     },
@@ -4320,21 +4370,6 @@
       "assignments": [
         {
           "region": 18,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Krzykalskiego",
-      "assignments": [
-        {
-          "region": 20,
           "rules": [
             {
               "type": "all"
@@ -4411,35 +4446,17 @@
       ]
     },
     {
-      "street": "Kręta",
+      "street": "Krzykalskiego",
       "assignments": [
         {
-          "region": 10,
+          "region": 20,
           "rules": [
             {
-              "type": "list",
-              "values": [
-                "1",
-                "2"
-              ]
+              "type": "all"
             }
           ],
           "verified": false,
-          "sourceRule": "1 i 2"
-        },
-        {
-          "region": 29,
-          "rules": [
-            {
-              "type": "allExcept",
-              "exclude": [
-                "1",
-                "2"
-              ]
-            }
-          ],
-          "verified": false,
-          "sourceRule": "bez 1 i 2"
+          "sourceRule": "cała"
         }
       ]
     },
@@ -5475,6 +5492,71 @@
       ]
     },
     {
+      "street": "Łącznik",
+      "assignments": [
+        {
+          "region": 18,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Łokietka",
+      "assignments": [
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Łowiecka",
+      "assignments": [
+        {
+          "region": 39,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Łukasińskiego",
+      "assignments": [
+        {
+          "region": 17,
+          "rules": [
+            {
+              "type": "list",
+              "values": [
+                "11",
+                "11a",
+                "13"
+              ]
+            }
+          ],
+          "verified": false,
+          "sourceRule": "11, 11a, 13"
+        }
+      ]
+    },
+    {
       "street": "Magazynowa",
       "assignments": [
         {
@@ -5483,7 +5565,12 @@
             {
               "type": "list",
               "values": [
-                "1-1e",
+                "1",
+                "1a",
+                "1b",
+                "1c",
+                "1d",
+                "1e",
                 "5",
                 "6",
                 "7"
@@ -5584,6 +5671,51 @@
       ]
     },
     {
+      "street": "Mała Góra",
+      "assignments": [
+        {
+          "region": 38,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Mała Poręba",
+      "assignments": [
+        {
+          "region": 10,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Małeckiego",
+      "assignments": [
+        {
+          "region": 4,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Marcinkowicka",
       "assignments": [
         {
@@ -5663,51 +5795,6 @@
       ]
     },
     {
-      "street": "Mała Góra",
-      "assignments": [
-        {
-          "region": 38,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Mała Poręba",
-      "assignments": [
-        {
-          "region": 10,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Małeckiego",
-      "assignments": [
-        {
-          "region": 4,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
       "street": "Meissnera",
       "assignments": [
         {
@@ -5770,6 +5857,21 @@
       ]
     },
     {
+      "street": "Miła",
+      "assignments": [
+        {
+          "region": 16,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Miodowa",
       "assignments": [
         {
@@ -5815,10 +5917,25 @@
       ]
     },
     {
-      "street": "Miła",
+      "street": "Młodzieżowa",
       "assignments": [
         {
-          "region": 16,
+          "region": 27,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Młyńska",
+      "assignments": [
+        {
+          "region": 21,
           "rules": [
             {
               "type": "all"
@@ -5903,36 +6020,6 @@
       ]
     },
     {
-      "street": "Młodzieżowa",
-      "assignments": [
-        {
-          "region": 27,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Młyńska",
-      "assignments": [
-        {
-          "region": 21,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
       "street": "Na Rurach",
       "assignments": [
         {
@@ -5978,6 +6065,21 @@
       ]
     },
     {
+      "street": "Nałkowskiej",
+      "assignments": [
+        {
+          "region": 9,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Narcyza Wiatra",
       "assignments": [
         {
@@ -6004,6 +6106,84 @@
           ],
           "verified": false,
           "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Naściszowa",
+      "assignments": [
+        {
+          "region": 35,
+          "rules": [
+            {
+              "type": "allExcept",
+              "exclude": [
+                "20",
+                "56",
+                "59"
+              ]
+            }
+          ],
+          "verified": false,
+          "sourceRule": "bez 20, 56, 59"
+        },
+        {
+          "region": 40,
+          "rules": [
+            {
+              "type": "allExcept",
+              "exclude": [
+                "20",
+                "56",
+                "59"
+              ]
+            }
+          ],
+          "verified": false,
+          "sourceRule": "bez 20, 56, 59"
+        }
+      ]
+    },
+    {
+      "street": "Naściszowska",
+      "assignments": [
+        {
+          "region": 26,
+          "rules": [
+            {
+              "type": "range",
+              "from": 6,
+              "to": 20,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 1,
+              "to": 29,
+              "parity": "odd"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "parzyste: 6-20; nieparzyste: 1-29"
+        },
+        {
+          "region": 33,
+          "rules": [
+            {
+              "type": "range",
+              "from": 30,
+              "to": null,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 33,
+              "to": null,
+              "parity": "odd"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "parzyste: od 30 do końca; nieparzyste: od 33 do końca"
         }
       ]
     },
@@ -6096,99 +6276,6 @@
           ],
           "verified": false,
           "sourceRule": "parzyste: 2, 4; nieparzyste: 1-21"
-        }
-      ]
-    },
-    {
-      "street": "Nałkowskiej",
-      "assignments": [
-        {
-          "region": 9,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Naściszowa",
-      "assignments": [
-        {
-          "region": 35,
-          "rules": [
-            {
-              "type": "allExcept",
-              "exclude": [
-                "20",
-                "56",
-                "59"
-              ]
-            }
-          ],
-          "verified": false,
-          "sourceRule": "bez 20, 56, 59"
-        },
-        {
-          "region": 40,
-          "rules": [
-            {
-              "type": "allExcept",
-              "exclude": [
-                "20",
-                "56",
-                "59"
-              ]
-            }
-          ],
-          "verified": false,
-          "sourceRule": "bez 20, 56, 59"
-        }
-      ]
-    },
-    {
-      "street": "Naściszowska",
-      "assignments": [
-        {
-          "region": 26,
-          "rules": [
-            {
-              "type": "range",
-              "from": 6,
-              "to": 20,
-              "parity": "even"
-            },
-            {
-              "type": "range",
-              "from": 1,
-              "to": 29,
-              "parity": "odd"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "parzyste: 6-20; nieparzyste: 1-29"
-        },
-        {
-          "region": 33,
-          "rules": [
-            {
-              "type": "range",
-              "from": 30,
-              "to": null,
-              "parity": "even"
-            },
-            {
-              "type": "range",
-              "from": 33,
-              "to": null,
-              "parity": "odd"
-            }
-          ],
-          "verified": true,
-          "sourceRule": "parzyste: od 30 do końca; nieparzyste: od 33 do końca"
         }
       ]
     },
@@ -6746,6 +6833,61 @@
       ]
     },
     {
+      "street": "Piątkowa",
+      "assignments": [
+        {
+          "region": 36,
+          "rules": [
+            {
+              "type": "allExcept",
+              "exclude": [
+                "22",
+                "45",
+                "65",
+                "81",
+                "84",
+                "131",
+                "133",
+                "138",
+                "189",
+                "195",
+                "198",
+                "204",
+                "233",
+                "245",
+                "255",
+                "281",
+                "291",
+                "298",
+                "354",
+                "364",
+                "365",
+                "366",
+                "414"
+              ]
+            }
+          ],
+          "verified": false,
+          "sourceRule": "bez 22, 45, 65, 81, 84, 131, 133, 138, 189, 195, 198, 204, 233, 245, 255, 281, 291, 298, 354, 364, 365, 366, 414"
+        }
+      ]
+    },
+    {
+      "street": "Piątkowska",
+      "assignments": [
+        {
+          "region": 36,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Pienińska",
       "assignments": [
         {
@@ -6765,6 +6907,21 @@
       "assignments": [
         {
           "region": 21,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Piękna",
+      "assignments": [
+        {
+          "region": 13,
           "rules": [
             {
               "type": "all"
@@ -6826,106 +6983,6 @@
       ]
     },
     {
-      "street": "Piotra Skargi",
-      "assignments": [
-        {
-          "region": 22,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Piramowicza",
-      "assignments": [
-        {
-          "region": 20,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Piątkowa",
-      "assignments": [
-        {
-          "region": 36,
-          "rules": [
-            {
-              "type": "allExcept",
-              "exclude": [
-                "22",
-                "45",
-                "65",
-                "81",
-                "84",
-                "131",
-                "133",
-                "138",
-                "189",
-                "195",
-                "198",
-                "204",
-                "233",
-                "245",
-                "255",
-                "281",
-                "291",
-                "298",
-                "354",
-                "364",
-                "365",
-                "366",
-                "414"
-              ]
-            }
-          ],
-          "verified": false,
-          "sourceRule": "bez 22, 45, 65, 81, 84, 131, 133, 138, 189, 195, 198, 204, 233, 245, 255, 281, 291, 298, 354, 364, 365, 366, 414"
-        }
-      ]
-    },
-    {
-      "street": "Piątkowska",
-      "assignments": [
-        {
-          "region": 36,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Piękna",
-      "assignments": [
-        {
-          "region": 13,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
       "street": "Piłsudskiego",
       "assignments": [
         {
@@ -6965,7 +7022,12 @@
               "values": [
                 "23",
                 "46",
-                "104-106c"
+                "104",
+                "105",
+                "106",
+                "106a",
+                "106b",
+                "106c"
               ]
             }
           ],
@@ -7038,6 +7100,36 @@
           ],
           "verified": false,
           "sourceRule": "parzyste: 50, 52a, 54, 60, 64, 68, 70, 72, 88; nieparzyste: 7-13"
+        }
+      ]
+    },
+    {
+      "street": "Piotra Skargi",
+      "assignments": [
+        {
+          "region": 22,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Piramowicza",
+      "assignments": [
+        {
+          "region": 20,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
         }
       ]
     },
@@ -7349,6 +7441,21 @@
       ]
     },
     {
+      "street": "Powstańców Śląskich",
+      "assignments": [
+        {
+          "region": 16,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Powstańców Warszawy",
       "assignments": [
         {
@@ -7365,21 +7472,6 @@
     },
     {
       "street": "Powstańców Wielkopolskich",
-      "assignments": [
-        {
-          "region": 16,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Powstańców Śląskich",
       "assignments": [
         {
           "region": 16,
@@ -7427,6 +7519,24 @@
           ],
           "verified": false,
           "sourceRule": "2, 9"
+        }
+      ]
+    },
+    {
+      "street": "Prądzyńskiego",
+      "assignments": [
+        {
+          "region": 18,
+          "rules": [
+            {
+              "type": "list",
+              "values": [
+                "31"
+              ]
+            }
+          ],
+          "verified": false,
+          "sourceRule": "31"
         }
       ]
     },
@@ -7599,24 +7709,6 @@
       ]
     },
     {
-      "street": "Prądzyńskiego",
-      "assignments": [
-        {
-          "region": 18,
-          "rules": [
-            {
-              "type": "list",
-              "values": [
-                "31"
-              ]
-            }
-          ],
-          "verified": false,
-          "sourceRule": "31"
-        }
-      ]
-    },
-    {
       "street": "Pułaskiego",
       "assignments": [
         {
@@ -7713,21 +7805,6 @@
       ]
     },
     {
-      "street": "Raczkowskiego",
-      "assignments": [
-        {
-          "region": 9,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
       "street": "Racławicka",
       "assignments": [
         {
@@ -7763,6 +7840,21 @@
           ],
           "verified": false,
           "sourceRule": "1, 2, 3, 4, 8"
+        }
+      ]
+    },
+    {
+      "street": "Raczkowskiego",
+      "assignments": [
+        {
+          "region": 9,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
         }
       ]
     },
@@ -7982,6 +8074,21 @@
       ]
     },
     {
+      "street": "Różana",
+      "assignments": [
+        {
+          "region": 27,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Ruchu Ludowego",
       "assignments": [
         {
@@ -8028,9 +8135,15 @@
               "parity": "even"
             },
             {
+              "type": "range",
+              "from": 3,
+              "to": 41,
+              "parity": "odd"
+            },
+            {
               "type": "list",
               "values": [
-                "3-41a"
+                "41a"
               ]
             }
           ],
@@ -8192,21 +8305,6 @@
       ]
     },
     {
-      "street": "Różana",
-      "assignments": [
-        {
-          "region": 27,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
       "street": "Sabały",
       "assignments": [
         {
@@ -8257,6 +8355,21 @@
             }
           ],
           "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Sędziwoja",
+      "assignments": [
+        {
+          "region": 11,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
           "sourceRule": "cała"
         }
       ]
@@ -8316,16 +8429,16 @@
           "region": 1,
           "rules": [
             {
-              "type": "list",
-              "values": [
-                "40-88 do końca"
-              ]
+              "type": "range",
+              "from": 40,
+              "to": 88,
+              "parity": "even"
             },
             {
-              "type": "list",
-              "values": [
-                "39-95 do końca"
-              ]
+              "type": "range",
+              "from": 39,
+              "to": 95,
+              "parity": "odd"
             }
           ],
           "verified": false,
@@ -8413,6 +8526,36 @@
       ]
     },
     {
+      "street": "Słoneczna",
+      "assignments": [
+        {
+          "region": 20,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Słowacka",
+      "assignments": [
+        {
+          "region": 11,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Sobieskiego",
       "assignments": [
         {
@@ -8432,6 +8575,21 @@
       "assignments": [
         {
           "region": 4,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Sołecka",
+      "assignments": [
+        {
+          "region": 10,
           "rules": [
             {
               "type": "all"
@@ -8472,21 +8630,6 @@
       "assignments": [
         {
           "region": 13,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Sołecka",
-      "assignments": [
-        {
-          "region": 10,
           "rules": [
             {
               "type": "all"
@@ -8895,10 +9038,10 @@
       ]
     },
     {
-      "street": "Sędziwoja",
+      "street": "Ściegiennego",
       "assignments": [
         {
-          "region": 11,
+          "region": 25,
           "rules": [
             {
               "type": "all"
@@ -8910,10 +9053,10 @@
       ]
     },
     {
-      "street": "Słoneczna",
+      "street": "Śniadeckich",
       "assignments": [
         {
-          "region": 20,
+          "region": 21,
           "rules": [
             {
               "type": "all"
@@ -8925,10 +9068,70 @@
       ]
     },
     {
-      "street": "Słowacka",
+      "street": "Św. Ducha",
       "assignments": [
         {
-          "region": 11,
+          "region": 23,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Św. Heleny",
+      "assignments": [
+        {
+          "region": 25,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Św. Małgorzaty",
+      "assignments": [
+        {
+          "region": 23,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Św. Rity",
+      "assignments": [
+        {
+          "region": 8,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Świt",
+      "assignments": [
+        {
+          "region": 2,
           "rules": [
             {
               "type": "all"
@@ -9119,6 +9322,56 @@
       ]
     },
     {
+      "street": "Tęczowa",
+      "assignments": [
+        {
+          "region": 2,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Tłoki",
+      "assignments": [
+        {
+          "region": 11,
+          "rules": [
+            {
+              "type": "list",
+              "values": [
+                "65",
+                "74",
+                "81"
+              ]
+            }
+          ],
+          "verified": false,
+          "sourceRule": "65, 74, 81"
+        },
+        {
+          "region": 20,
+          "rules": [
+            {
+              "type": "allExcept",
+              "exclude": [
+                "65",
+                "74",
+                "81"
+              ]
+            }
+          ],
+          "verified": false,
+          "sourceRule": "bez 65, 74, 81"
+        }
+      ]
+    },
+    {
       "street": "Topolowa",
       "assignments": [
         {
@@ -9259,56 +9512,6 @@
       ]
     },
     {
-      "street": "Tęczowa",
-      "assignments": [
-        {
-          "region": 2,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Tłoki",
-      "assignments": [
-        {
-          "region": 11,
-          "rules": [
-            {
-              "type": "list",
-              "values": [
-                "65",
-                "74",
-                "81"
-              ]
-            }
-          ],
-          "verified": false,
-          "sourceRule": "65, 74, 81"
-        },
-        {
-          "region": 20,
-          "rules": [
-            {
-              "type": "allExcept",
-              "exclude": [
-                "65",
-                "74",
-                "81"
-              ]
-            }
-          ],
-          "verified": false,
-          "sourceRule": "bez 65, 74, 81"
-        }
-      ]
-    },
-    {
       "street": "Ubiad",
       "assignments": [
         {
@@ -9414,6 +9617,21 @@
       ]
     },
     {
+      "street": "Wałowa",
+      "assignments": [
+        {
+          "region": 23,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Warszewicza",
       "assignments": [
         {
@@ -9474,7 +9692,7 @@
       ]
     },
     {
-      "street": "Wałowa",
+      "street": "Wąska",
       "assignments": [
         {
           "region": 23,
@@ -9530,6 +9748,55 @@
           ],
           "verified": true,
           "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Węgierska",
+      "assignments": [
+        {
+          "region": 11,
+          "rules": [
+            {
+              "type": "range",
+              "from": 131,
+              "to": null,
+              "parity": "odd"
+            },
+            {
+              "type": "range",
+              "from": 144,
+              "to": null,
+              "parity": "even"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "nieparzyste: od 131 do końca; parzyste: od 144 do końca"
+        },
+        {
+          "region": 20,
+          "rules": [
+            {
+              "type": "range",
+              "from": 2,
+              "to": 140,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 1,
+              "to": 129,
+              "parity": "odd"
+            },
+            {
+              "type": "list",
+              "values": [
+                "140a"
+              ]
+            }
+          ],
+          "verified": false,
+          "sourceRule": "parzyste: 2-140a; nieparzyste: 1-129"
         }
       ]
     },
@@ -11126,46 +11393,6 @@
       ]
     },
     {
-      "street": "Witkacego",
-      "assignments": [
-        {
-          "region": 25,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Witosa",
-      "assignments": [
-        {
-          "region": 24,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        },
-        {
-          "region": 25,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
       "street": "Wiśniowa",
       "assignments": [
         {
@@ -11343,6 +11570,46 @@
       ]
     },
     {
+      "street": "Witkacego",
+      "assignments": [
+        {
+          "region": 25,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Witosa",
+      "assignments": [
+        {
+          "region": 24,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        },
+        {
+          "region": 25,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Wola Kurowska",
       "assignments": [
         {
@@ -11482,64 +11749,6 @@
       ]
     },
     {
-      "street": "Wąska",
-      "assignments": [
-        {
-          "region": 23,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Węgierska",
-      "assignments": [
-        {
-          "region": 11,
-          "rules": [
-            {
-              "type": "range",
-              "from": 131,
-              "to": null,
-              "parity": "odd"
-            },
-            {
-              "type": "range",
-              "from": 144,
-              "to": null,
-              "parity": "even"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "nieparzyste: od 131 do końca; parzyste: od 144 do końca"
-        },
-        {
-          "region": 20,
-          "rules": [
-            {
-              "type": "list",
-              "values": [
-                "2-140a"
-              ]
-            },
-            {
-              "type": "range",
-              "from": 1,
-              "to": 129,
-              "parity": "odd"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "parzyste: 2-140a; nieparzyste: 1-129"
-        }
-      ]
-    },
-    {
       "street": "Zabawa",
       "assignments": [
         {
@@ -11650,6 +11859,21 @@
       ]
     },
     {
+      "street": "Zakładników",
+      "assignments": [
+        {
+          "region": 11,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Zakole",
       "assignments": [
         {
@@ -11701,21 +11925,6 @@
           ],
           "verified": false,
           "sourceRule": "parzyste: 6-18; nieparzyste: 3-31"
-        }
-      ]
-    },
-    {
-      "street": "Zakładników",
-      "assignments": [
-        {
-          "region": 11,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
         }
       ]
     },
@@ -11984,176 +12193,6 @@
       ]
     },
     {
-      "street": "Łokietka",
-      "assignments": [
-        {
-          "region": 34,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": true,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Łowiecka",
-      "assignments": [
-        {
-          "region": 39,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Łukasińskiego",
-      "assignments": [
-        {
-          "region": 17,
-          "rules": [
-            {
-              "type": "list",
-              "values": [
-                "11",
-                "11a",
-                "13"
-              ]
-            }
-          ],
-          "verified": false,
-          "sourceRule": "11, 11a, 13"
-        }
-      ]
-    },
-    {
-      "street": "Łącznik",
-      "assignments": [
-        {
-          "region": 18,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Ściegiennego",
-      "assignments": [
-        {
-          "region": 25,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Śniadeckich",
-      "assignments": [
-        {
-          "region": 21,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Św. Ducha",
-      "assignments": [
-        {
-          "region": 23,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Św. Heleny",
-      "assignments": [
-        {
-          "region": 25,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Św. Małgorzaty",
-      "assignments": [
-        {
-          "region": 23,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Św. Rity",
-      "assignments": [
-        {
-          "region": 8,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
-      "street": "Świt",
-      "assignments": [
-        {
-          "region": 2,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
-        }
-      ]
-    },
-    {
       "street": "Źródlana",
       "assignments": [
         {
@@ -12245,6 +12284,21 @@
       ]
     },
     {
+      "street": "Żółkiewskiego",
+      "assignments": [
+        {
+          "region": 4,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Żulińskiego",
       "assignments": [
         {
@@ -12325,21 +12379,6 @@
           ],
           "verified": false,
           "sourceRule": "5, 6, 8, 9, 10"
-        }
-      ]
-    },
-    {
-      "street": "Żółkiewskiego",
-      "assignments": [
-        {
-          "region": 4,
-          "rules": [
-            {
-              "type": "all"
-            }
-          ],
-          "verified": false,
-          "sourceRule": "cała"
         }
       ]
     }
