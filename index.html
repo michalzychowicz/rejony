@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wyszukiwarka rejonów</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<main class="container">
+
+    <section class="search-card">
+
+        <h1>Znajdź rejon</h1>
+        <p class="description">
+            Wprowadź ulicę i numer budynku.
+        </p>
+
+        <form id="searchForm">
+
+            <div class="field">
+                <label for="street">Ulica</label>
+
+                <input
+                    type="text"
+                    id="street"
+                    list="streetList"
+                    placeholder="np. Barska"
+                    autocomplete="off"
+                    required
+                >
+
+                <datalist id="streetList"></datalist>
+            </div>
+
+
+            <div class="field">
+                <label for="houseNumber">Numer budynku</label>
+
+                <input
+                    type="text"
+                    id="houseNumber"
+                    placeholder="np. 72 lub 20a"
+                    required
+                >
+            </div>
+
+
+            <button type="submit">
+                Sprawdź
+            </button>
+
+        </form>
+
+
+        <div id="result" class="result hidden"></div>
+
+    </section>
+
+</main>
+
+<script src="app.js"></script>
+
+</body>
+</html>

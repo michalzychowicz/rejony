@@ -1,0 +1,86 @@
+{
+  "streets": [
+    {
+      "street": "Barska",
+      "assignments": [
+        {
+          "region": 35,
+          "rules": [
+            {
+              "type": "range",
+              "from": 72,
+              "to": null,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 109,
+              "to": null,
+              "parity": "odd"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "street": "Gorzkowska",
+      "assignments": [
+        {
+          "region": 18,
+          "rules": [
+            {
+              "type": "list",
+              "values": ["1", "3", "20a"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "street": "Jagiellońska",
+      "assignments": [
+        {
+          "region": 15,
+          "rules": [
+            {
+              "type": "range",
+              "from": 22,
+              "to": 84,
+              "parity": "even",
+              "exclude": ["52"]
+            },
+            {
+              "type": "range",
+              "from": 31,
+              "to": 73,
+              "parity": "odd"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "street": "Naściszowska",
+      "assignments": [
+        {
+          "region": 35,
+          "rules": [
+            {
+              "type": "allExcept",
+              "exclude": ["20", "56", "59"]
+            }
+          ]
+        },
+        {
+          "region": 40,
+          "rules": [
+            {
+              "type": "allExcept",
+              "exclude": ["20", "56", "59"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
