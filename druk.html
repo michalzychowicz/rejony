@@ -24,6 +24,7 @@
             z-index: 10;
 
             display: flex;
+            flex-wrap: wrap;
             gap: 12px;
             align-items: center;
 
@@ -33,104 +34,109 @@
             color: white;
         }
 
-        .toolbar button {
-            padding: 10px 18px;
+        .toolbar button,
+        .toolbar select {
+            padding: 9px 14px;
             border: 0;
             border-radius: 6px;
+            font-size: 14px;
+        }
 
+        .toolbar button {
             background: white;
             color: #222;
-
             font-weight: bold;
             cursor: pointer;
         }
 
-        .toolbar button:hover {
-            background: #ddd;
-        }
-
-        .toolbar select {
-            padding: 9px;
-            border-radius: 6px;
-            border: 0;
+        .toolbar label {
+            font-size: 14px;
         }
 
         #status {
             margin-left: auto;
-            font-size: 14px;
             color: #ccc;
+            font-size: 13px;
         }
-
-
-        /* =========================
-           STRONA
-        ========================= */
 
         #printArea {
             max-width: 210mm;
             margin: 25px auto;
         }
 
-        .region {
+        .block {
             width: 100%;
-
             margin-bottom: 20px;
 
             background: white;
 
             border: 2px solid black;
 
-            page-break-inside: avoid;
             break-inside: avoid;
+            page-break-inside: avoid;
         }
 
-
-        .region-title {
+        .block-title {
             padding: 8px;
 
             border-bottom: 2px solid black;
 
-            font-size: 22px;
-            font-weight: bold;
             text-align: center;
+            font-size: 21px;
+            font-weight: bold;
         }
-
 
         table {
             width: 100%;
             border-collapse: collapse;
         }
 
-
-        td {
+        td,
+        th {
             padding: 6px 8px;
-
             border-bottom: 1px solid black;
-
             vertical-align: top;
-
+            text-align: left;
             font-size: 14px;
         }
-
 
         tr:last-child td {
             border-bottom: 0;
         }
 
-
-        .street {
-            width: 43%;
-
+        td:first-child,
+        th:first-child {
             border-right: 1px solid black;
+        }
 
+        .street-name {
+            width: 42%;
             font-weight: bold;
         }
 
-
-        .rule {
-            width: 57%;
+        .region-number {
+            width: 22%;
+            font-weight: bold;
+            text-align: center;
         }
 
+        .rule {
+            width: 58%;
+        }
+
+        .letter {
+            margin: 28px 0 10px;
+
+            padding-bottom: 4px;
+
+            border-bottom: 3px solid black;
+
+            font-size: 26px;
+            font-weight: bold;
+
+            break-after: avoid;
+            page-break-after: avoid;
+        }
 
         .empty {
             padding: 30px;
@@ -138,16 +144,10 @@
             text-align: center;
         }
 
-
-        /* =========================
-           WYDRUK
-        ========================= */
-
         @page {
             size: A4 portrait;
             margin: 12mm;
         }
-
 
         @media print {
 
@@ -155,11 +155,9 @@
                 background: white;
             }
 
-
             .toolbar {
                 display: none !important;
             }
-
 
             #printArea {
                 width: 100%;
@@ -167,30 +165,30 @@
                 margin: 0;
             }
 
-
-            .region {
-                margin: 0 0 8mm 0;
-
-                box-shadow: none;
+            .block {
+                margin-bottom: 7mm;
             }
 
-
-            .region-title {
-                font-size: 18px;
+            .block-title {
+                font-size: 17px;
+                padding: 5px;
             }
 
+            td,
+            th {
+                font-size: 11px;
+                padding: 3px 5px;
+            }
 
-            td {
-                font-size: 12px;
-                padding: 4px 6px;
+            .letter {
+                margin-top: 5mm;
+                font-size: 20px;
             }
         }
-
     </style>
 </head>
 
 <body>
-
 
 <div class="toolbar">
 
@@ -198,17 +196,31 @@
         🖨️ Drukuj / PDF
     </button>
 
-
-    <label for="regionFilter">
-        Rejon:
+    <label for="viewMode">
+        Układ:
     </label>
 
-    <select id="regionFilter">
+    <select id="viewMode">
 
+        <option value="regions">
+            Według rejonów
+        </option>
+
+        <option value="streets">
+            Według ulic
+        </option>
+
+    </select>
+
+
+    <label for="itemFilter">
+        Pokaż:
+    </label>
+
+    <select id="itemFilter">
         <option value="all">
             Wszystkie
         </option>
-
     </select>
 
 
@@ -226,17 +238,28 @@
 
 let data;
 
+const viewMode =
+    document.getElementById("viewMode");
 
-/* =====================================
-   WCZYTANIE JSON
-===================================== */
+const itemFilter =
+    document.getElementById("itemFilter");
+
+const printArea =
+    document.getElementById("printArea");
+
+const status =
+    document.getElementById("status");
+
+
+/* ===============================
+   WCZYTANIE DANYCH
+=============================== */
 
 fetch("./data/rejony.json")
 
     .then(response => {
 
         if (!response.ok) {
-
             throw new Error(
                 `HTTP ${response.status}`
             );
@@ -249,57 +272,60 @@ fetch("./data/rejony.json")
 
         data = json;
 
-        loadRegionFilter();
+        refreshFilter();
+        render();
 
-        renderRegions();
-
-        document.getElementById(
-            "status"
-        ).textContent =
-            "Dane załadowane";
+        status.textContent =
+            `Załadowano ${data.streets.length} ulic`;
     })
 
     .catch(error => {
 
         console.error(error);
 
-        document.getElementById(
-            "status"
-        ).textContent =
+        status.textContent =
             "Błąd wczytywania";
 
-        document.getElementById(
-            "printArea"
-        ).innerHTML = `
-
+        printArea.innerHTML = `
             <div class="empty">
-
-                <strong>
-                    Nie udało się wczytać
-                    data/rejony.json
-                </strong>
-
+                Nie udało się wczytać
+                <strong>data/rejony.json</strong>.
             </div>
-
         `;
     });
 
 
+/* ===============================
+   ZDARZENIA
+=============================== */
 
-/* =====================================
-   LISTA REJONÓW
-===================================== */
+viewMode.addEventListener(
+    "change",
+    () => {
 
-function getRegionNumbers() {
+        refreshFilter();
+        render();
+    }
+);
+
+
+itemFilter.addEventListener(
+    "change",
+    render
+);
+
+
+/* ===============================
+   REJONY
+=============================== */
+
+function getRegions() {
 
     const regions =
         new Set();
 
 
-    for (
-        const street
-        of data.streets
-    ) {
+    for (const street of data.streets) {
 
         for (
             const assignment
@@ -315,132 +341,99 @@ function getRegionNumbers() {
 
     return [...regions]
         .sort(
-            (a, b) =>
-                a - b
+            (a, b) => a - b
         );
 }
 
 
+/* ===============================
+   FILTR
+=============================== */
 
-function loadRegionFilter() {
+function refreshFilter() {
 
-    const select =
-        document.getElementById(
-            "regionFilter"
-        );
-
-
-    const regions =
-        getRegionNumbers();
-
-
-    for (
-        const region
-        of regions
-    ) {
-
-        const option =
-            document.createElement(
-                "option"
-            );
+    itemFilter.innerHTML = `
+        <option value="all">
+            Wszystkie
+        </option>
+    `;
 
 
-        option.value =
-            region;
-
-
-        option.textContent =
-            `Rejon ${region}`;
-
-
-        select.appendChild(
-            option
-        );
-    }
-}
-
-
-
-document
-    .getElementById(
-        "regionFilter"
-    )
-    .addEventListener(
-        "change",
-        renderRegions
-    );
-
-
-
-/* =====================================
-   DANE DLA REJONU
-===================================== */
-
-function getRegionData(
-    regionNumber
-) {
-
-    const result = [];
-
-
-    for (
-        const street
-        of data.streets
+    if (
+        viewMode.value ===
+        "regions"
     ) {
 
         for (
-            const assignment
-            of street.assignments
+            const region
+            of getRegions()
         ) {
 
-            if (
-                assignment.region ===
-                regionNumber
-            ) {
+            const option =
+                document.createElement(
+                    "option"
+                );
 
-                result.push({
+            option.value =
+                region;
 
-                    street:
-                        street.street,
+            option.textContent =
+                `Rejon ${region}`;
 
-                    rules:
-                        assignment.rules
-                });
-            }
+            itemFilter.appendChild(
+                option
+            );
+        }
+
+    } else {
+
+        const streets =
+            [...data.streets]
+                .sort(
+                    (a, b) =>
+                        a.street.localeCompare(
+                            b.street,
+                            "pl"
+                        )
+                );
+
+
+        for (
+            const street
+            of streets
+        ) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                street.street;
+
+            option.textContent =
+                street.street;
+
+            itemFilter.appendChild(
+                option
+            );
         }
     }
-
-
-    result.sort(
-        (a, b) =>
-            a.street.localeCompare(
-                b.street,
-                "pl"
-            )
-    );
-
-
-    return result;
 }
 
 
-
-/* =====================================
-   FORMATOWANIE REGUŁ
-===================================== */
+/* ===============================
+   FORMAT REGUŁ
+=============================== */
 
 function formatRule(rule) {
-
-
-    /* CAŁA ULICA */
 
     if (
         rule.type === "all"
     ) {
 
         if (
-            rule.exclude &&
-            rule.exclude.length
+            rule.exclude?.length
         ) {
 
             return (
@@ -451,13 +444,9 @@ function formatRule(rule) {
             );
         }
 
-
         return "";
     }
 
-
-
-    /* CAŁA POZA */
 
     if (
         rule.type === "allExcept"
@@ -472,9 +461,6 @@ function formatRule(rule) {
     }
 
 
-
-    /* LISTA */
-
     if (
         rule.type === "list"
     ) {
@@ -487,8 +473,7 @@ function formatRule(rule) {
 
 
         if (
-            rule.exclude &&
-            rule.exclude.length
+            rule.exclude?.length
         ) {
 
             text +=
@@ -498,13 +483,9 @@ function formatRule(rule) {
                 );
         }
 
-
         return text;
     }
 
-
-
-    /* ZAKRES */
 
     if (
         rule.type === "range"
@@ -514,7 +495,8 @@ function formatRule(rule) {
 
 
         if (
-            rule.parity === "even"
+            rule.parity ===
+            "even"
         ) {
 
             prefix =
@@ -523,7 +505,8 @@ function formatRule(rule) {
 
 
         if (
-            rule.parity === "odd"
+            rule.parity ===
+            "odd"
         ) {
 
             prefix =
@@ -547,9 +530,7 @@ function formatRule(rule) {
         ) {
 
             range =
-                String(
-                    rule.from
-                );
+                String(rule.from);
 
         } else {
 
@@ -563,8 +544,7 @@ function formatRule(rule) {
 
 
         if (
-            rule.exclude &&
-            rule.exclude.length
+            rule.exclude?.length
         ) {
 
             text +=
@@ -583,233 +563,146 @@ function formatRule(rule) {
 }
 
 
-
-/* =====================================
+/* ===============================
    WYJĄTKI
-===================================== */
+=============================== */
 
 function formatExclusions(
     exclusions
 ) {
 
     return exclusions
-        .map(
-            exclusion => {
 
-                if (
-                    typeof exclusion ===
-                    "string"
-                ) {
+        .map(exclusion => {
 
-                    return exclusion;
-                }
+            if (
+                typeof exclusion ===
+                "string"
+            ) {
 
-
-                if (
-                    !exclusion ||
-                    typeof exclusion !==
-                    "object"
-                ) {
-
-                    return "?";
-                }
-
-
-                let text;
-
-
-                if (
-                    exclusion.to === null ||
-                    exclusion.to === undefined
-                ) {
-
-                    text =
-                        `od ${exclusion.from} do końca`;
-
-                } else if (
-                    exclusion.from ===
-                    exclusion.to
-                ) {
-
-                    text =
-                        String(
-                            exclusion.from
-                        );
-
-                } else {
-
-                    text =
-                        `${exclusion.from}-${exclusion.to}`;
-                }
-
-
-                if (
-                    exclusion.parity ===
-                    "even"
-                ) {
-
-                    text +=
-                        " parzyste";
-                }
-
-
-                if (
-                    exclusion.parity ===
-                    "odd"
-                ) {
-
-                    text +=
-                        " nieparzyste";
-                }
-
-
-                return text;
+                return exclusion;
             }
-        )
+
+
+            if (
+                !exclusion ||
+                typeof exclusion !==
+                "object"
+            ) {
+
+                return "?";
+            }
+
+
+            let text;
+
+
+            if (
+                exclusion.to === null ||
+                exclusion.to === undefined
+            ) {
+
+                text =
+                    `od ${exclusion.from} do końca`;
+
+            } else if (
+                exclusion.from ===
+                exclusion.to
+            ) {
+
+                text =
+                    String(
+                        exclusion.from
+                    );
+
+            } else {
+
+                text =
+                    `${exclusion.from}-${exclusion.to}`;
+            }
+
+
+            if (
+                exclusion.parity ===
+                "even"
+            ) {
+
+                text +=
+                    " parzyste";
+            }
+
+
+            if (
+                exclusion.parity ===
+                "odd"
+            ) {
+
+                text +=
+                    " nieparzyste";
+            }
+
+
+            return text;
+        })
+
         .join(", ");
 }
 
 
-
-/* =====================================
+/* ===============================
    ŁĄCZENIE REGUŁ
-===================================== */
+=============================== */
 
-function formatRules(
-    rules
-) {
+function formatRules(rules) {
 
-    /*
-        Łączymy kolejne reguły,
-        ale każdą pokazujemy osobno.
-    */
+    const formatted =
+        rules
+            .map(formatRule)
+            .filter(Boolean);
 
-    return rules
-        .map(formatRule)
-        .filter(
-            text =>
-                text !== ""
-        )
+
+    if (
+        formatted.length === 0
+    ) {
+
+        return "";
+    }
+
+
+    return formatted
+        .map(escapeHtml)
         .join("<br>");
 }
 
 
+/* ===============================
+   WIDOK WG REJONÓW
+=============================== */
 
-/* =====================================
-   HTML REJONU
-===================================== */
-
-function createRegionHtml(
-    regionNumber
-) {
-
-    const streets =
-        getRegionData(
-            regionNumber
-        );
-
-
-    let rows = "";
-
-
-    for (
-        const item
-        of streets
-    ) {
-
-        const ruleText =
-            formatRules(
-                item.rules
-            );
-
-
-        rows += `
-
-            <tr>
-
-                <td class="street">
-                    ${escapeHtml(
-                        item.street
-                    )}
-                </td>
-
-                <td class="rule">
-                    ${ruleText}
-                </td>
-
-            </tr>
-
-        `;
-    }
-
-
-    return `
-
-        <section class="region">
-
-            <div class="region-title">
-                Rejon ${regionNumber}
-            </div>
-
-
-            <table>
-
-                <tbody>
-                    ${rows}
-                </tbody>
-
-            </table>
-
-        </section>
-
-    `;
-}
-
-
-
-/* =====================================
-   RENDEROWANIE
-===================================== */
-
-function renderRegions() {
-
-    if (!data) {
-        return;
-    }
-
-
-    const selected =
-        document.getElementById(
-            "regionFilter"
-        ).value;
-
-
-    const printArea =
-        document.getElementById(
-            "printArea"
-        );
-
-
-    printArea.innerHTML =
-        "";
-
+function renderByRegions() {
 
     let regions;
 
 
     if (
-        selected === "all"
+        itemFilter.value ===
+        "all"
     ) {
 
         regions =
-            getRegionNumbers();
+            getRegions();
 
     } else {
 
         regions = [
-            Number(selected)
+            Number(
+                itemFilter.value
+            )
         ];
     }
+
+
+    let html = "";
 
 
     for (
@@ -817,25 +710,325 @@ function renderRegions() {
         of regions
     ) {
 
-        printArea.insertAdjacentHTML(
-            "beforeend",
+        const streets = [];
 
-            createRegionHtml(
-                region
-            )
+
+        for (
+            const street
+            of data.streets
+        ) {
+
+            for (
+                const assignment
+                of street.assignments
+            ) {
+
+                if (
+                    assignment.region ===
+                    region
+                ) {
+
+                    streets.push({
+
+                        street:
+                            street.street,
+
+                        rules:
+                            assignment.rules
+                    });
+                }
+            }
+        }
+
+
+        streets.sort(
+            (a, b) =>
+                a.street.localeCompare(
+                    b.street,
+                    "pl"
+                )
         );
+
+
+        let rows = "";
+
+
+        for (
+            const item
+            of streets
+        ) {
+
+            rows += `
+
+                <tr>
+
+                    <td class="street-name">
+                        ${escapeHtml(
+                            item.street
+                        )}
+                    </td>
+
+                    <td class="rule">
+                        ${formatRules(
+                            item.rules
+                        )}
+                    </td>
+
+                </tr>
+
+            `;
+        }
+
+
+        html += `
+
+            <section class="block">
+
+                <div class="block-title">
+                    Rejon ${region}
+                </div>
+
+                <table>
+                    <tbody>
+                        ${rows}
+                    </tbody>
+                </table>
+
+            </section>
+
+        `;
+    }
+
+
+    printArea.innerHTML =
+        html;
+}
+
+
+/* ===============================
+   WIDOK WG ULIC
+=============================== */
+
+function renderByStreets() {
+
+    let streets;
+
+
+    if (
+        itemFilter.value ===
+        "all"
+    ) {
+
+        streets =
+            [...data.streets];
+
+    } else {
+
+        streets =
+            data.streets.filter(
+                street =>
+                    street.street ===
+                    itemFilter.value
+            );
+    }
+
+
+    streets.sort(
+        (a, b) =>
+            a.street.localeCompare(
+                b.street,
+                "pl"
+            )
+    );
+
+
+    let html = "";
+
+    let previousLetter =
+        null;
+
+
+    for (
+        const street
+        of streets
+    ) {
+
+        /*
+            Litera alfabetu pokazuje się
+            tylko przy wydruku wszystkich ulic.
+        */
+
+        if (
+            itemFilter.value ===
+            "all"
+        ) {
+
+            const letter =
+                getFirstLetter(
+                    street.street
+                );
+
+
+            if (
+                letter !==
+                previousLetter
+            ) {
+
+                html += `
+                    <div class="letter">
+                        ${escapeHtml(
+                            letter
+                        )}
+                    </div>
+                `;
+
+                previousLetter =
+                    letter;
+            }
+        }
+
+
+        const assignments =
+            [...street.assignments]
+                .sort(
+                    (a, b) =>
+                        a.region -
+                        b.region
+                );
+
+
+        let rows = "";
+
+
+        for (
+            const assignment
+            of assignments
+        ) {
+
+            rows += `
+
+                <tr>
+
+                    <td class="region-number">
+                        Rejon
+                        ${assignment.region}
+                    </td>
+
+                    <td class="rule">
+                        ${formatRules(
+                            assignment.rules
+                        )}
+                    </td>
+
+                </tr>
+
+            `;
+        }
+
+
+        html += `
+
+            <section class="block">
+
+                <div class="block-title">
+                    ${escapeHtml(
+                        street.street
+                    )}
+                </div>
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th class="region-number">
+                                Rejon
+                            </th>
+
+                            <th>
+                                Numery budynków
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        ${rows}
+                    </tbody>
+
+                </table>
+
+            </section>
+
+        `;
+    }
+
+
+    printArea.innerHTML =
+        html;
+}
+
+
+/* ===============================
+   PIERWSZA LITERA
+=============================== */
+
+function getFirstLetter(
+    street
+) {
+
+    const first =
+        street
+            .trim()
+            .charAt(0)
+            .toUpperCase();
+
+
+    /*
+        Nazwy rozpoczynające się cyfrą
+        trafiają do sekcji "#".
+    */
+
+    if (
+        /[0-9]/.test(first)
+    ) {
+
+        return "#";
+    }
+
+
+    return first;
+}
+
+
+/* ===============================
+   GŁÓWNE RENDEROWANIE
+=============================== */
+
+function render() {
+
+    if (!data) {
+        return;
+    }
+
+
+    if (
+        viewMode.value ===
+        "regions"
+    ) {
+
+        renderByRegions();
+
+    } else {
+
+        renderByStreets();
     }
 }
 
 
+/* ===============================
+   ESCAPE HTML
+=============================== */
 
-/* =====================================
-   BEZPIECZNY TEKST
-===================================== */
-
-function escapeHtml(
-    value
-) {
+function escapeHtml(value) {
 
     return String(value)
 
