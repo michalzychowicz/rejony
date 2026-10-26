@@ -1,16 +1,11 @@
 {
   "meta": {
-    "version": 2,
+    "version": 3,
     "description": "Dane rejonów w formacie maszynowym dla app.js.",
     "missingRegions": [
-      5,
-      30,
-      31,
-      32,
-      33,
-      34
+      5
     ],
-    "note": "sourceRule zachowuje oryginalną transkrypcję do weryfikacji."
+    "note": "Rejony 30-34 dodane ze zdjęć i oznaczone verified=true. W rejonie 34 zapis Barbackiego „42-44m” pozostaje do sprawdzenia; w danych zapisano 42, 44 i 44m. Kościuszki „2-2g” zapisano jako 2, 2a-2g."
   },
   "streets": [
     {
@@ -212,6 +207,21 @@
       ]
     },
     {
+      "street": "Akacjowa",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Aleje Wolności",
       "assignments": [
         {
@@ -285,6 +295,21 @@
       ]
     },
     {
+      "street": "Andersa",
+      "assignments": [
+        {
+          "region": 31,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Ariańska",
       "assignments": [
         {
@@ -295,6 +320,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Armii Krajowej",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -419,6 +459,33 @@
           ],
           "verified": false,
           "sourceRule": "parzyste: 40, 46, 64, 66, 68; nieparzyste: od 77 do końca"
+        },
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "range",
+              "from": 2,
+              "to": 38,
+              "parity": "even"
+            },
+            {
+              "type": "list",
+              "values": [
+                "42",
+                "44",
+                "44m"
+              ]
+            },
+            {
+              "type": "range",
+              "from": 1,
+              "to": 75,
+              "parity": "odd"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "parzyste: 2-38, 42-44m; nieparzyste: 1-75"
         }
       ]
     },
@@ -494,6 +561,43 @@
           "sourceRule": "2"
         },
         {
+          "region": 31,
+          "rules": [
+            {
+              "type": "list",
+              "values": [
+                "8",
+                "10",
+                "12",
+                "14"
+              ]
+            }
+          ],
+          "verified": true,
+          "sourceRule": "8, 10, 12, 14"
+        },
+        {
+          "region": 33,
+          "rules": [
+            {
+              "type": "list",
+              "values": [
+                "5",
+                "7",
+                "6"
+              ]
+            },
+            {
+              "type": "range",
+              "from": 11,
+              "to": 81,
+              "parity": "odd"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "nieparzyste: 5, 7, 11-81; parzyste: 6"
+        },
+        {
           "region": 35,
           "rules": [
             {
@@ -511,6 +615,21 @@
           ],
           "verified": false,
           "sourceRule": "parzyste: od 72 do końca; nieparzyste: od 109 do końca"
+        }
+      ]
+    },
+    {
+      "street": "Batalionów Chłopskich",
+      "assignments": [
+        {
+          "region": 30,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
         }
       ]
     },
@@ -937,6 +1056,53 @@
           ],
           "verified": false,
           "sourceRule": "30"
+        },
+        {
+          "region": 30,
+          "rules": [
+            {
+              "type": "range",
+              "from": 28,
+              "to": 28,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 32,
+              "to": 38,
+              "parity": "even"
+            },
+            {
+              "type": "list",
+              "values": [
+                "21",
+                "23",
+                "27"
+              ]
+            }
+          ],
+          "verified": true,
+          "sourceRule": "parzyste: 28, 32-38; nieparzyste: 21, 23, 27"
+        },
+        {
+          "region": 33,
+          "rules": [
+            {
+              "type": "range",
+              "from": 2,
+              "to": 26,
+              "parity": "even"
+            },
+            {
+              "type": "list",
+              "values": [
+                "3",
+                "5"
+              ]
+            }
+          ],
+          "verified": true,
+          "sourceRule": "parzyste: 2-26; nieparzyste: 3, 5"
         }
       ]
     },
@@ -1192,6 +1358,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Cicha",
+      "assignments": [
+        {
+          "region": 33,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -1868,6 +2049,21 @@
       ]
     },
     {
+      "street": "Fieldorfa",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Flisaków",
       "assignments": [
         {
@@ -1956,6 +2152,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Gałczyńskiego",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -2448,6 +2659,19 @@
           ],
           "verified": false,
           "sourceRule": "17, 19, 21"
+        },
+        {
+          "region": 33,
+          "rules": [
+            {
+              "type": "list",
+              "values": [
+                "1a"
+              ]
+            }
+          ],
+          "verified": true,
+          "sourceRule": "1a"
         }
       ]
     },
@@ -2609,6 +2833,21 @@
       ]
     },
     {
+      "street": "Harcerska",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Hasiora",
       "assignments": [
         {
@@ -2634,6 +2873,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Hubala",
+      "assignments": [
+        {
+          "region": 31,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -3105,6 +3359,21 @@
       ]
     },
     {
+      "street": "Jaśminowa",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Jesionowa",
       "assignments": [
         {
@@ -3379,6 +3648,21 @@
           ],
           "verified": false,
           "sourceRule": "parzyste: 4-12; nieparzyste: 1-5"
+        }
+      ]
+    },
+    {
+      "street": "Kasztanowa",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
         }
       ]
     },
@@ -3918,6 +4202,30 @@
           ],
           "verified": false,
           "sourceRule": "7, 17, 19"
+        },
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "list",
+              "values": [
+                "1",
+                "2",
+                "2a",
+                "2b",
+                "2c",
+                "2d",
+                "2e",
+                "2f",
+                "2g",
+                "3",
+                "6",
+                "10"
+              ]
+            }
+          ],
+          "verified": true,
+          "sourceRule": "1, 2-2g, 3, 6, 10"
         }
       ]
     },
@@ -4727,6 +5035,21 @@
       ]
     },
     {
+      "street": "Kwiatowa",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Lachów Sądeckich",
       "assignments": [
         {
@@ -4767,6 +5090,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Lenartowicza",
+      "assignments": [
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -5095,6 +5433,32 @@
           "sourceRule": "parzyste: 26-76; nieparzyste: 69-87"
         },
         {
+          "region": 30,
+          "rules": [
+            {
+              "type": "range",
+              "from": 91,
+              "to": 125,
+              "parity": "odd"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "nieparzyste: 91-125"
+        },
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "range",
+              "from": 80,
+              "to": 138,
+              "parity": "even"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "parzyste: 80-138"
+        },
+        {
           "region": 36,
           "rules": [
             {
@@ -5373,6 +5737,20 @@
           ],
           "verified": false,
           "sourceRule": "10"
+        },
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "list",
+              "values": [
+                "1",
+                "2"
+              ]
+            }
+          ],
+          "verified": true,
+          "sourceRule": "1, 2"
         }
       ]
     },
@@ -5447,6 +5825,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Modrzejewskiej",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -5795,6 +6188,25 @@
           ],
           "verified": false,
           "sourceRule": "parzyste: 6-20; nieparzyste: 1-29"
+        },
+        {
+          "region": 33,
+          "rules": [
+            {
+              "type": "range",
+              "from": 30,
+              "to": null,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 33,
+              "to": null,
+              "parity": "odd"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "parzyste: od 30 do końca; nieparzyste: od 33 do końca"
         }
       ]
     },
@@ -5986,6 +6398,25 @@
           ],
           "verified": false,
           "sourceRule": "nieparzyste: 117-205"
+        },
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "range",
+              "from": 12,
+              "to": 82,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 3,
+              "to": 115,
+              "parity": "odd"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "parzyste: 12-82; nieparzyste: 3-115"
         }
       ]
     },
@@ -6000,6 +6431,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Okulickiego",
+      "assignments": [
+        {
+          "region": 31,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -6180,6 +6626,20 @@
           ],
           "verified": false,
           "sourceRule": "parzyste: 28-44; nieparzyste: 29-41, 49, 55"
+        },
+        {
+          "region": 33,
+          "rules": [
+            {
+              "type": "list",
+              "values": [
+                "77",
+                "79"
+              ]
+            }
+          ],
+          "verified": true,
+          "sourceRule": "77, 79"
         }
       ]
     },
@@ -6224,6 +6684,36 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Parkowa",
+      "assignments": [
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Partyzantów",
+      "assignments": [
+        {
+          "region": 31,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -7370,6 +7860,21 @@
       ]
     },
     {
+      "street": "Reymonta",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Ritter",
       "assignments": [
         {
@@ -7755,6 +8260,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Samotna",
+      "assignments": [
+        {
+          "region": 31,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -8215,6 +8735,64 @@
       ]
     },
     {
+      "street": "Strzelecka",
+      "assignments": [
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Sucharskiego",
+      "assignments": [
+        {
+          "region": 30,
+          "rules": [
+            {
+              "type": "range",
+              "from": 44,
+              "to": 66,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 19,
+              "to": 23,
+              "parity": "odd"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "parzyste: 44-66; nieparzyste: 19-23"
+        },
+        {
+          "region": 31,
+          "rules": [
+            {
+              "type": "range",
+              "from": 2,
+              "to": 34,
+              "parity": "even"
+            },
+            {
+              "type": "range",
+              "from": 1,
+              "to": 17,
+              "parity": "odd"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "parzyste: 2-34; nieparzyste: 1-17"
+        }
+      ]
+    },
+    {
       "street": "Sygańskiego",
       "assignments": [
         {
@@ -8225,6 +8803,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Szarych Szeregów",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -8514,6 +9107,51 @@
       ]
     },
     {
+      "street": "Teligi",
+      "assignments": [
+        {
+          "region": 31,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Tetmajera",
+      "assignments": [
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Topolowa",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Towarowa",
       "assignments": [
         {
@@ -8749,6 +9387,21 @@
       ]
     },
     {
+      "street": "W. Pola",
+      "assignments": [
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "W. Stwosza",
       "assignments": [
         {
@@ -8879,6 +9532,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Westerplatte",
+      "assignments": [
+        {
+          "region": 30,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -10431,6 +11099,21 @@
       ]
     },
     {
+      "street": "Wiktora",
+      "assignments": [
+        {
+          "region": 32,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Winna Góra",
       "assignments": [
         {
@@ -10441,6 +11124,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Wiosenna",
+      "assignments": [
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
@@ -10678,6 +11376,21 @@
       ]
     },
     {
+      "street": "Wolskiej",
+      "assignments": [
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Wrześniowska",
       "assignments": [
         {
@@ -10692,6 +11405,22 @@
           ],
           "verified": false,
           "sourceRule": "parzyste: 2-10"
+        },
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "allExcept",
+              "exclude": [
+                {
+                  "from": 2,
+                  "to": 10
+                }
+              ]
+            }
+          ],
+          "verified": true,
+          "sourceRule": "bez: 2-10"
         }
       ]
     },
@@ -11270,6 +11999,21 @@
       ]
     },
     {
+      "street": "Łokietka",
+      "assignments": [
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
       "street": "Łowiecka",
       "assignments": [
         {
@@ -11466,6 +12210,21 @@
             }
           ],
           "verified": false,
+          "sourceRule": "cała"
+        }
+      ]
+    },
+    {
+      "street": "Żeglarska",
+      "assignments": [
+        {
+          "region": 34,
+          "rules": [
+            {
+              "type": "all"
+            }
+          ],
+          "verified": true,
           "sourceRule": "cała"
         }
       ]
