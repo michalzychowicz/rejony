@@ -448,32 +448,52 @@ function loadStreetList() {
    FORMULARZ
 ========================= */
 
-searchForm.addEventListener(
-    "submit",
-    event => {
+function updateSearchResult() {
 
-        event.preventDefault();
-
-
-        if (!data) {
-
-            displayResult({
-                status: "data-error"
-            });
-
-            return;
-        }
-
-
-        const result =
-            findRegion(
-                streetInput.value,
-                houseNumberInput.value
-            );
-
-
-        displayResult(result);
+    if (!data) {
+        return;
     }
+
+    const street =
+        streetInput.value.trim();
+
+    const houseNumber =
+        houseNumberInput.value.trim();
+
+
+    // Nie pokazujemy błędu,
+    // dopóki użytkownik nie poda obu wartości.
+    if (!street || !houseNumber) {
+
+        resultElement.className =
+            "result hidden";
+
+        resultElement.innerHTML = "";
+
+        return;
+    }
+
+
+    const result =
+        findRegion(
+            street,
+            houseNumber
+        );
+
+
+    displayResult(result);
+}
+
+
+streetInput.addEventListener(
+    "input",
+    updateSearchResult
+);
+
+
+houseNumberInput.addEventListener(
+    "input",
+    updateSearchResult
 );
 
 
